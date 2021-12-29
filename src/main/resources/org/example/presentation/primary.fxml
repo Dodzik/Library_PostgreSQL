@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.presentation.PrimaryController">
+   <children>
+      <ListView fx:id="friendsListView" layoutX="233.0" layoutY="88.0" prefHeight="298.0" prefWidth="353.0" />
+      <Text layoutX="176.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone number database">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Text>
+      <VBox alignment="CENTER" layoutX="51.0" layoutY="101.0" prefHeight="199.0" prefWidth="149.0" spacing="15.0">
+         <children>
+            <TextField fx:id="name" promptText="Name" />
+            <TextField fx:id="phoneNumber" promptText="Phone Number" />
+            <Button mnemonicParsing="false" onAction="#addFriend" text="Add Friend" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
