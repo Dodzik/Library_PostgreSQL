@@ -9,12 +9,12 @@
    <children>
       <VBox alignment="CENTER" layoutX="189.0" layoutY="100.0" prefHeight="200.0" prefWidth="223.0" spacing="15.0">
          <children>
-            <TextField promptText="email" />
-            <TextField promptText="Nazwisko">
+            <TextField fx:id="txtemail" promptText="email" />
+            <TextField fx:id="txthaslo" promptText="haslo">
                <VBox.margin>
                   <Insets />
                </VBox.margin></TextField>
-            <Button mnemonicParsing="false" prefWidth="52.0" text="Log in" textAlignment="CENTER" />
+            <Button mnemonicParsing="false" onAction="#clientLogIn" prefWidth="52.0" text="Log in" textAlignment="CENTER" />
          </children></VBox>
       <Text layoutX="151.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Logowanie Klient:" textAlignment="CENTER" wrappingWidth="298.642578125">
          <font>

@@ -12,9 +12,10 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("primary.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("mainPage.fxml"));
+        Scene scene = new Scene(root);
         primaryStage.setTitle("Liblary Application");
-        primaryStage.setScene(new Scene(root));
+        primaryStage.setScene(scene);
         primaryStage.show();
     }
 
