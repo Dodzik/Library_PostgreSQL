@@ -12,15 +12,15 @@
          </font>
       </Text>
       <ListView fx:id="booksListView" layoutX="200.0" layoutY="73.0" prefHeight="77.0" prefWidth="359.0" />
-      <Button layoutX="66.0" layoutY="296.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="58.0" style="-fx-background-color: green;" text="Back" textFill="WHITE" />
+      <Button layoutX="45.0" layoutY="293.0" mnemonicParsing="false" onAction="#Back" prefHeight="31.0" prefWidth="67.0" style="-fx-background-color: green;" text="Back" textFill="WHITE" />
       <TableView fx:id="booksTableView" layoutX="145.0" layoutY="200.0" prefHeight="158.0" prefWidth="449.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
-            <TableColumn prefWidth="75.0" text="Column X" />
-            <TableColumn prefWidth="75.0" text="Column X" />
-            <TableColumn prefWidth="75.0" text="Column X" />
-            <TableColumn prefWidth="75.0" text="Column X" />
+          <TableColumn fx:id="id" prefWidth="75.0" text="Id" />
+          <TableColumn fx:id="gatunek_id" prefWidth="75.0" text="Gatunek_id" />
+            <TableColumn fx:id="wydawnictwo_id" prefWidth="92.0" text="Wydawnictwo_id" />
+            <TableColumn fx:id="tytul" prefWidth="58.0" text="Tytul" />
+            <TableColumn fx:id="liczbaStron" prefWidth="75.0" text="liczba_stron" />
+            <TableColumn fx:id="opis" prefWidth="75.0" text="opis" />
         </columns>
       </TableView>
    </children>
