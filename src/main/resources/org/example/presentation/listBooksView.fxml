@@ -16,9 +16,9 @@
       <TableView fx:id="booksTableView" layoutX="145.0" layoutY="200.0" prefHeight="158.0" prefWidth="449.0">
         <columns>
           <TableColumn fx:id="id" prefWidth="75.0" text="Id" />
-          <TableColumn fx:id="gatunek_id" prefWidth="75.0" text="Gatunek_id" />
-            <TableColumn fx:id="wydawnictwo_id" prefWidth="92.0" text="Wydawnictwo_id" />
             <TableColumn fx:id="tytul" prefWidth="58.0" text="Tytul" />
+          <TableColumn fx:id="gatunek" prefWidth="75.0" text="Gatunek" />
+            <TableColumn fx:id="wydawnictwo" prefWidth="92.0" text="Wydawnictwo" />
             <TableColumn fx:id="liczbaStron" prefWidth="75.0" text="liczba_stron" />
             <TableColumn fx:id="opis" prefWidth="75.0" text="opis" />
         </columns>

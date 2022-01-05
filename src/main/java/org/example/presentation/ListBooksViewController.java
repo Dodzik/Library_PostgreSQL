@@ -37,10 +37,10 @@ public class ListBooksViewController implements Initializable {
     private TableColumn<Book,Integer> id;
 
     @FXML
-    private TableColumn<Book,String> gatunek_id;
+    private TableColumn<Book,String> gatunek;
 
     @FXML
-    private TableColumn<Book,String> wydawnictwo_id;
+    private TableColumn<Book,String> wydawnictwo;
 
     @FXML
     private TableColumn<Book,String> tytul;
@@ -62,8 +62,8 @@ public class ListBooksViewController implements Initializable {
 
 
         id.setCellValueFactory(new PropertyValueFactory<Book,Integer>("id"));
-        gatunek_id.setCellValueFactory(new PropertyValueFactory<Book,String>("gatunek_id"));
-        wydawnictwo_id.setCellValueFactory(new PropertyValueFactory<Book,String>("wydawnictwo_id"));
+        gatunek.setCellValueFactory(new PropertyValueFactory<Book,String>("gatunek"));
+        wydawnictwo.setCellValueFactory(new PropertyValueFactory<Book,String>("wydawnictwo"));
         tytul.setCellValueFactory(new PropertyValueFactory<Book,String>("tytul"));
         liczbaStron.setCellValueFactory(new PropertyValueFactory<Book,Integer>("liczbaStron"));
         opis.setCellValueFactory(new PropertyValueFactory<Book,String>("opis"));

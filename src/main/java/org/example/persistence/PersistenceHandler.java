@@ -241,6 +241,25 @@ public class PersistenceHandler implements IPersistenceHandler {
     }
 
     @Override
+    public boolean createRezerwacja(Rezerwacja rezerwacja) {
+        try {
+            PreparedStatement insertStatement = connection.prepareStatement(
+                    "INSERT INTO rezerwacje (id_rezerwacje, ksiazki_id_ksiazka,klienci_id_klient,data_2) VALUES (?,?,?,?);");
+            insertStatement.setInt(1,getMaxIndexRezerwacje()+1);
+            insertStatement.setInt(2,getKsiazkaId(rezerwacja.getKsiazka()));
+            insertStatement.setInt(3,getKlientId(rezerwacja.getImie(), rezerwacja.getNazwisko()));
+            insertStatement.setDate(4, rezerwacja.getDate());
+
+
+            insertStatement.execute();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    @Override
     public boolean createFriend(Friend friend) {
         try {
             PreparedStatement insertStatement = connection.prepareStatement(
@@ -255,4 +274,50 @@ public class PersistenceHandler implements IPersistenceHandler {
         }
         return true;
     }
+    @Override
+    public Integer getMaxIndexRezerwacje(){
+        try {
+            PreparedStatement stmt = connection.prepareStatement("SELECT MAX(id_rezerwacje) FROM rezerwacje ");
+            ResultSet sqlReturnValues = stmt.executeQuery();
+
+            while (sqlReturnValues.next()) {
+                return sqlReturnValues.getInt(1);
+            }
+            System.out.println("nie ma takiego datebase");
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+        return null;
+    }
+    @Override
+    public Integer getKsiazkaId(String tytul){
+        try {
+            PreparedStatement stmt = connection.prepareStatement("SELECT id_ksiazka FROM ksiazki WHERE tytul="+tytul);
+            ResultSet sqlReturnValues = stmt.executeQuery();
+
+            while (sqlReturnValues.next()) {
+                return sqlReturnValues.getInt(1);
+            }
+            System.out.println("nie ma takiego tytulu");
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+        return null;
+    }
+    @Override
+    public Integer getKlientId(String imie, String nazwisko){
+        try {
+            PreparedStatement stmt = connection.prepareStatement("SELECT id_klient FROM klienci WHERE imie="+imie+" AND nazwisko="+nazwisko);
+            ResultSet sqlReturnValues = stmt.executeQuery();
+
+            while (sqlReturnValues.next()) {
+                return sqlReturnValues.getInt(1);
+            }
+            System.out.println("nie ma takiego tytulu");
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+        return null;
+    }
+
 }

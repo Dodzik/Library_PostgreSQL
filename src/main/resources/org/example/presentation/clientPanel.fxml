@@ -11,13 +11,11 @@
             <Font name="System Bold" size="30.0" />
          </font>
       </Text>
-      <ButtonBar layoutX="44.0" layoutY="55.0" prefHeight="81.0" prefWidth="511.0">
+      <ButtonBar layoutX="157.0" layoutY="55.0" prefHeight="81.0" prefWidth="285.0">
          <buttons>
             <Button mnemonicParsing="false" onAction="#switchToBooksView" prefHeight="53.0" prefWidth="74.0" style="-fx-background-color: green;" text="Ksiazki" textFill="WHITE" />
-            <Button mnemonicParsing="false" prefHeight="52.0" prefWidth="59.0" style="-fx-background-color: green;" text="Wydawnictwa" textFill="WHITE" />
             <Button mnemonicParsing="false" onAction="#idzDoInformacji" prefHeight="52.0" prefWidth="81.0" style="-fx-background-color: green;" text="Informacje" textFill="WHITE" />
             <Button mnemonicParsing="false" onAction="#idzDoListyRezerwacji" prefHeight="52.0" prefWidth="81.0" style="-fx-background-color: green;" text="Rezerwacje" textFill="WHITE" />
-            <Button mnemonicParsing="false" prefHeight="52.0" prefWidth="105.0" style="-fx-background-color: green;" text="Pracownicy Biblioteki" textAlignment="CENTER" textFill="WHITE" wrapText="true" />
          </buttons>
       </ButtonBar>
    </children>

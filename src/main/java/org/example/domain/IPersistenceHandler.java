@@ -25,4 +25,12 @@ public interface IPersistenceHandler {
     public Klient getKlientInformacje();
 
     public Dane getKlientDane(Integer id_klient);
+
+    public boolean createRezerwacja(Rezerwacja rezerwacja);
+
+    public Integer getMaxIndexRezerwacje();
+
+    public Integer getKsiazkaId(String tytul);
+
+    public Integer getKlientId(String imie, String nazwisko);
 }
