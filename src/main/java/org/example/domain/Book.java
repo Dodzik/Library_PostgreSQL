@@ -2,16 +2,16 @@ package org.example.domain;
 
 public class Book {
     private Integer id;
-    private String gatunek;
-    private String wydawnictwo;
+    private Integer gatunek_id;
+    private Integer wydawnictwo_id;
     private String tytul;
     private Integer liczbaStron;
     private String opis;
 
-    public Book(Integer id, String gatunek, String wydawnictwo, String tytul, Integer liczbaStron, String opis) {
+    public Book(Integer id, Integer gatunek_id, Integer wydawnictwo_id, String tytul, Integer liczbaStron, String opis) {
         this.id = id;
-        this.gatunek = gatunek;
-        this.wydawnictwo = wydawnictwo;
+        this.gatunek_id = gatunek_id;
+        this.wydawnictwo_id = wydawnictwo_id;
         this.tytul = tytul;
         this.liczbaStron = liczbaStron;
         this.opis = opis;
@@ -21,12 +21,12 @@ public class Book {
         return id;
     }
 
-    public String getGatunek() {
-        return gatunek;
+    public Integer getGatunek_id() {
+        return gatunek_id;
     }
 
-    public String getWydawnictwo() {
-        return wydawnictwo;
+    public Integer getWydawnictwo_id() {
+        return wydawnictwo_id;
     }
 
     public String getTytul() {
@@ -45,8 +45,8 @@ public class Book {
     public String toString() {
         return "Book{" +
                 "id=" + id +
-                ", gatunek_id=" + gatunek +
-                ", wydawnictwo_id=" + wydawnictwo +
+                ", gatunek_id=" + gatunek_id +
+                ", wydawnictwo_id=" + wydawnictwo_id +
                 ", tytul='" + tytul + '\'' +
                 ", liczbaStron=" + liczbaStron +
                 ", opis='" + opis + '\'' +

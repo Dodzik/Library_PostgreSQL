@@ -6,46 +6,39 @@ import java.sql.Date;
 public class Rezerwacja {
 
     private Integer id_rezerwacje;
-    private String ksiazka;
-    private String imie;
-    private String nazwisko;
+    private Integer ksiazka_id;
+    private Integer klient_id;
     private Date date;
+
+    public Rezerwacja(Integer id_rezerwacje, Integer ksiazka_id, Integer klient_id, Date date) {
+        this.id_rezerwacje = id_rezerwacje;
+        this.ksiazka_id = ksiazka_id;
+        this.klient_id = klient_id;
+        this.date = date;
+    }
 
     public Integer getId_rezerwacje() {
         return id_rezerwacje;
     }
 
-    public String getImie() {
-        return imie;
+    public Integer getKsiazka_id() {
+        return ksiazka_id;
     }
 
-    public String getNazwisko() {
-        return nazwisko;
+    public Integer getKlient_id() {
+        return klient_id;
     }
 
     public Date getDate() {
         return date;
     }
 
-    public String getKsiazka() {
-        return ksiazka;
-    }
-
-    public Rezerwacja(Integer id_rezerwacje, String ksiazka, String imie, String nazwisko, Date date) {
-        this.id_rezerwacje = id_rezerwacje;
-        this.ksiazka = ksiazka;
-        this.imie = imie;
-        this.nazwisko = nazwisko;
-        this.date = date;
-    }
-
     @Override
     public String toString() {
         return "Rezerwacja{" +
                 "id_rezerwacje=" + id_rezerwacje +
-                ", ksiazka='" + ksiazka + '\'' +
-                ", imie='" + imie + '\'' +
-                ", nazwisko='" + nazwisko + '\'' +
+                ", ksiazka_id=" + ksiazka_id +
+                ", klient_id=" + klient_id +
                 ", date=" + date +
                 '}';
     }

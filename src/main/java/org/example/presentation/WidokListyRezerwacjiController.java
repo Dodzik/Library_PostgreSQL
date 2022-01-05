@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -35,13 +36,13 @@ public class WidokListyRezerwacjiController implements Initializable {
     private TableView<Rezerwacja> rezerwacjeTableView;
 
     @FXML
-    private TableColumn<Rezerwacja,String> ksiazka;
+    private TableColumn<Rezerwacja,Integer> ksiazka;
 
     @FXML
-    private TableColumn<Rezerwacja,String> imie;
+    private TableColumn<Rezerwacja,Integer> imie;
 
     @FXML
-    private TableColumn<Rezerwacja,String> nazwisko;
+    private TableColumn<Rezerwacja,Integer> nazwisko;
 
     @FXML
     private TableColumn<Rezerwacja, Date> date;
@@ -72,22 +73,24 @@ public class WidokListyRezerwacjiController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        rezerwacjeTableView.getItems().addAll(persistenceHandler.getRezerwacjeKlient());
+//        rezerwacjeTableView.getItems().addAll(persistenceHandler.getRezerwacjeKlient());
 
-        ksiazka.setCellValueFactory(new PropertyValueFactory<Rezerwacja,String>("ksiazka"));
-        imie.setCellValueFactory(new PropertyValueFactory<Rezerwacja,String>("imie"));
-        nazwisko.setCellValueFactory(new PropertyValueFactory<Rezerwacja,String>("nazwisko"));
+        ksiazka.setCellValueFactory(new PropertyValueFactory<Rezerwacja,Integer>("ksiazka_id"));
+        imie.setCellValueFactory(new PropertyValueFactory<Rezerwacja,Integer>("klient_id"));
+        nazwisko.setCellValueFactory(new PropertyValueFactory<Rezerwacja,Integer>("klient_id"));
         date.setCellValueFactory(new PropertyValueFactory<Rezerwacja,Date>("date"));
 
         rezerwacjeTableView.setItems(list);
 
+        updateUI();
     }
 
     @FXML
     public void dodajRezerwacje(ActionEvent actionEvent) throws ParseException {
         String sdate = fieldData.getText();
         Date date1 = Date.valueOf(sdate);
-        Rezerwacja rezerwacja = new Rezerwacja(null,fieldKsiazka.getText(),null,null,date1);
+
+        Rezerwacja rezerwacja = new Rezerwacja(null,persistenceHandler.getKsiazkaId(fieldKsiazka.getText()),null,date1);
 
         if(persistenceHandler.createRezerwacja(rezerwacja)){
             System.out.println("Rezerwacja inserted into database");
@@ -97,14 +100,49 @@ public class WidokListyRezerwacjiController implements Initializable {
         updateUI();
     }
 
-
-
-
     private void updateUI(){
         fieldKsiazka.clear();
         fieldData.clear();
         rezerwacjeTableView.getItems().clear();
         rezerwacjeTableView.getItems().addAll(persistenceHandler.getRezerwacjeKlient());
+
+        ksiazka.setCellFactory(tc -> new TableCell<>() {
+            @Override
+            protected void updateItem(Integer ksiazka_id, boolean empty) {
+                super.updateItem(ksiazka_id, empty);
+                if (empty) {
+                    setText(null);
+                } else {
+                    setText(persistenceHandler.getNazwaKsiazka(ksiazka_id));
+                }
+            }
+        });
+
+        imie.setCellFactory(tc -> new TableCell<>() {
+            @Override
+            protected void updateItem(Integer klient_id, boolean empty) {
+                super.updateItem(klient_id, empty);
+                if (empty) {
+                    setText(null);
+                } else {
+                    setText(persistenceHandler.getKlientById(klient_id).getName());
+                }
+            }
+        });
+
+        nazwisko.setCellFactory(tc -> new TableCell<>() {
+            @Override
+            protected void updateItem(Integer klient_id, boolean empty) {
+                super.updateItem(klient_id, empty);
+                if (empty) {
+                    setText(null);
+                } else {
+                    setText(persistenceHandler.getKlientById(klient_id).getSurname());
+                }
+            }
+        });
+
+
     }
 //    @FXML
 //    void addFriend(ActionEvent event) {

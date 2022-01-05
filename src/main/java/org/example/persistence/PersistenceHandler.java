@@ -1,6 +1,5 @@
 package org.example.persistence;
 
-import javafx.scene.paint.Color;
 import org.example.domain.*;
 
 import java.sql.*;
@@ -15,11 +14,6 @@ public class PersistenceHandler implements IPersistenceHandler {
     private static String databaseName = "zwvjtqus";
     private static String username = "zwvjtqus";
     private static String password = "2TxSSPNIOQ_1Lml3bELGFn4ANpmFIOtp";
-    //    private String url = "abul.db.elephantsql.com";
-//    private int port = 5432;
-//    private String databaseName = "zwvjtqus";
-//    private String username = "zwvjtqus";
-//    private String password = "2TxSSPNIOQ_1Lml3bELGFn4ANpmFIOtp";
     private Connection connection = null;
 
 
@@ -48,8 +42,15 @@ public class PersistenceHandler implements IPersistenceHandler {
         }
     }
 
-    private String sesjaEmail="";
+    private String sesjaEmail = "";
+    private Integer temp = -1;
 
+    @Override
+    public void setTemp(Integer temp) {
+        this.temp = temp;
+    }
+
+    @Override
     public boolean checkClient(String email, String haslo) {
 
         try {
@@ -63,7 +64,7 @@ public class PersistenceHandler implements IPersistenceHandler {
                 System.out.println("nie udalo sie");
                 return false;
             } else {
-                sesjaEmail=email;
+                sesjaEmail = email;
                 System.out.println("udalo sie");
                 return true;
             }
@@ -120,8 +121,8 @@ public class PersistenceHandler implements IPersistenceHandler {
             List<Book> returnValues = new ArrayList<>();
 
             while (sqlReturnValues.next()) {
-                returnValues.add(new Book(sqlReturnValues.getInt(1), getGatunek(sqlReturnValues.getInt(2)),
-                        getWydawnictwo(sqlReturnValues.getInt(3)), sqlReturnValues.getString(4), sqlReturnValues.getInt(5),
+                returnValues.add(new Book(sqlReturnValues.getInt(1), sqlReturnValues.getInt(2),
+                        sqlReturnValues.getInt(3), sqlReturnValues.getString(4), sqlReturnValues.getInt(5),
                         sqlReturnValues.getString(6)));
             }
             return returnValues;
@@ -132,9 +133,66 @@ public class PersistenceHandler implements IPersistenceHandler {
     }
 
     @Override
-    public String getNazwaKsiazka(Integer id_ksiazka){
+    public List<Book> getKsiazkiAutora() {
         try {
-            PreparedStatement stmt = connection.prepareStatement("SELECT ksiazki.tytul FROM ksiazki WHERE ksiazki.id_ksiazka="+id_ksiazka);
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM autorzy_ksiazki WHERE autorzy_id_autor=" + "'" + temp + "'");
+            ResultSet sqlReturnValues = stmt.executeQuery();
+
+            List<Book> returnValues = new ArrayList<>();
+
+            while (sqlReturnValues.next()) {
+                Integer autor_id = sqlReturnValues.getInt(2);
+                returnValues.add(getKsiazkaById(autor_id));
+            }
+            return returnValues;
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public Book getKsiazkaById(Integer id) {
+        try {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM ksiazki WHERE id_ksiazka=" + id);
+            ResultSet sqlReturnValues = stmt.executeQuery();
+
+            while (sqlReturnValues.next()) {
+                return new Book(sqlReturnValues.getInt(1), sqlReturnValues.getInt(2),
+                        sqlReturnValues.getInt(3), sqlReturnValues.getString(4), sqlReturnValues.getInt(5),
+                        sqlReturnValues.getString(6));
+            }
+            System.out.println("nie ma takiego indeksu");
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+        return null;
+    }
+
+
+    @Override
+    public List<Autor> getAutorzy() {
+        try {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM autorzy");
+            ResultSet sqlReturnValues = stmt.executeQuery();
+
+            List<Autor> returnValues = new ArrayList<>();
+
+            while (sqlReturnValues.next()) {
+                returnValues.add(new Autor(sqlReturnValues.getInt(1), sqlReturnValues.getString(2),
+                        sqlReturnValues.getString(3)));
+            }
+            return returnValues;
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public String getNazwaKsiazka(Integer id_ksiazka) {
+        try {
+            PreparedStatement stmt = connection.prepareStatement("SELECT ksiazki.tytul FROM ksiazki WHERE ksiazki.id_ksiazka=" + id_ksiazka);
             ResultSet sqlReturnValues = stmt.executeQuery();
 
             while (sqlReturnValues.next()) {
@@ -148,28 +206,48 @@ public class PersistenceHandler implements IPersistenceHandler {
     }
 
     @Override
-    public List<Rezerwacja> getRezerwacjeKlient() {
+    public Klient getKlientById(Integer klient_id) {
         try {
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM klienci WHERE klienci.email="+"'"+ sesjaEmail+"'");
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM klienci WHERE klienci.id_klient=" + klient_id);
             ResultSet sqlReturnValues = stmt.executeQuery();
-            Integer Klient_id=0;
-            String imie ="";
-            String nazwisko="";
+
             while (sqlReturnValues.next()) {
-                Klient_id = sqlReturnValues.getInt(1);
-                imie=sqlReturnValues.getString(3);
-                nazwisko=sqlReturnValues.getString(4);
+                return new Klient(sqlReturnValues.getInt(1), sqlReturnValues.getInt(2), sqlReturnValues.getString(3),
+                        sqlReturnValues.getString(4),
+                        sqlReturnValues.getString(5),
+                        sqlReturnValues.getString(6));
             }
 
-            PreparedStatement stmt2 = connection.prepareStatement("SELECT * FROM rezerwacje WHERE rezerwacje.klienci_id_klient="+Klient_id);
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<Rezerwacja> getRezerwacjeKlient() {
+        try {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM klienci WHERE klienci.email=" + "'" + sesjaEmail + "'");
+            ResultSet sqlReturnValues = stmt.executeQuery();
+            Integer Klient_id = 0;
+//            String imie ="";
+//            String nazwisko="";
+            while (sqlReturnValues.next()) {
+                Klient_id = sqlReturnValues.getInt(1);
+//                imie=sqlReturnValues.getString(3);
+//                nazwisko=sqlReturnValues.getString(4);
+            }
+
+            PreparedStatement stmt2 = connection.prepareStatement("SELECT * FROM rezerwacje WHERE rezerwacje.klienci_id_klient=" + Klient_id);
             ResultSet sqlReturnValues2 = stmt2.executeQuery();
 
             List<Rezerwacja> returnValues = new ArrayList<>();
             while (sqlReturnValues2.next()) {
-
-                returnValues.add(new Rezerwacja(sqlReturnValues2.getInt(1),getNazwaKsiazka(sqlReturnValues2.getInt(1)) ,
-                        imie,
-                        nazwisko,
+//                System.out.println(new Rezerwacja(sqlReturnValues2.getInt(1),sqlReturnValues2.getInt(2),
+//                        sqlReturnValues2.getInt(3),
+//                        sqlReturnValues2.getDate(4)));
+                returnValues.add(new Rezerwacja(sqlReturnValues2.getInt(1), sqlReturnValues2.getInt(2),
+                        sqlReturnValues2.getInt(3),
                         sqlReturnValues2.getDate(4)));
             }
             return returnValues;
@@ -180,9 +258,9 @@ public class PersistenceHandler implements IPersistenceHandler {
     }
 
     @Override
-    public String getGatunek(Integer gatunek_id) {
+    public String getGatunekId(Integer gatunek_id) {
         try {
-            PreparedStatement stmt = connection.prepareStatement("SELECT gatunki.nazwa FROM gatunki WHERE gatunki.id_gatunek="+gatunek_id);
+            PreparedStatement stmt = connection.prepareStatement("SELECT gatunki.nazwa FROM gatunki WHERE gatunki.id_gatunek=" + gatunek_id);
             ResultSet sqlReturnValues = stmt.executeQuery();
 
             while (sqlReturnValues.next()) {
@@ -196,9 +274,9 @@ public class PersistenceHandler implements IPersistenceHandler {
     }
 
     @Override
-    public String getWydawnictwo(Integer wydownictwo_id) {
+    public String getWydawnictwoById(Integer wydownictwo_id) {
         try {
-            PreparedStatement stmt = connection.prepareStatement("SELECT wydawnictwa.nazwa FROM wydawnictwa WHERE wydawnictwa.id_wydawnictwa="+wydownictwo_id);
+            PreparedStatement stmt = connection.prepareStatement("SELECT wydawnictwa.nazwa FROM wydawnictwa WHERE wydawnictwa.id_wydawnictwa=" + wydownictwo_id);
             ResultSet sqlReturnValues = stmt.executeQuery();
 
             while (sqlReturnValues.next()) {
@@ -212,12 +290,12 @@ public class PersistenceHandler implements IPersistenceHandler {
     }
 
     @Override
-    public Klient getKlientInformacje(){
+    public Klient getKlientInformacje() {
         try {
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM klienci WHERE klienci.email="+"'"+ sesjaEmail+"'");
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM klienci WHERE klienci.email=" + "'" + sesjaEmail + "'");
             ResultSet sqlReturnValues = stmt.executeQuery();
             while (sqlReturnValues.next()) {
-                return new Klient(sqlReturnValues.getInt(1),sqlReturnValues.getInt(2), sqlReturnValues.getString(3),
+                return new Klient(sqlReturnValues.getInt(1), sqlReturnValues.getInt(2), sqlReturnValues.getString(3),
                         sqlReturnValues.getString(4), sqlReturnValues.getString(5), sqlReturnValues.getString(6));
             }
         } catch (SQLException throwable) {
@@ -226,9 +304,10 @@ public class PersistenceHandler implements IPersistenceHandler {
         return null;
     }
 
-    public Dane getKlientDane(Integer id_klient){
+    @Override
+    public Dane getKlientDane(Integer id_klient) {
         try {
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM dane WHERE dane.id_dane="+id_klient);
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM dane WHERE dane.id_dane=" + id_klient);
             ResultSet sqlReturnValues = stmt.executeQuery();
             while (sqlReturnValues.next()) {
                 return new Dane(sqlReturnValues.getInt(1), sqlReturnValues.getString(2),
@@ -245,12 +324,10 @@ public class PersistenceHandler implements IPersistenceHandler {
         try {
             PreparedStatement insertStatement = connection.prepareStatement(
                     "INSERT INTO rezerwacje (id_rezerwacje, ksiazki_id_ksiazka,klienci_id_klient,data_2) VALUES (?,?,?,?);");
-            insertStatement.setInt(1,getMaxIndexRezerwacje()+1);
-            insertStatement.setInt(2,getKsiazkaId(rezerwacja.getKsiazka()));
-            insertStatement.setInt(3,getKlientId(rezerwacja.getImie(), rezerwacja.getNazwisko()));
+            insertStatement.setInt(1, getMaxIndexRezerwacje() + 1);
+            insertStatement.setInt(2, rezerwacja.getKsiazka_id());
+            insertStatement.setInt(3, getKlientInformacje().getId());
             insertStatement.setDate(4, rezerwacja.getDate());
-
-
             insertStatement.execute();
         } catch (SQLException throwable) {
             throwable.printStackTrace();
@@ -266,7 +343,6 @@ public class PersistenceHandler implements IPersistenceHandler {
                     "INSERT INTO friends (name, phone_number) VALUES (?,?);");
             insertStatement.setString(1, friend.getName());
             insertStatement.setInt(2, friend.getPhone());
-
             insertStatement.execute();
         } catch (SQLException throwable) {
             throwable.printStackTrace();
@@ -274,12 +350,12 @@ public class PersistenceHandler implements IPersistenceHandler {
         }
         return true;
     }
+
     @Override
-    public Integer getMaxIndexRezerwacje(){
+    public Integer getMaxIndexRezerwacje() {
         try {
             PreparedStatement stmt = connection.prepareStatement("SELECT MAX(id_rezerwacje) FROM rezerwacje ");
             ResultSet sqlReturnValues = stmt.executeQuery();
-
             while (sqlReturnValues.next()) {
                 return sqlReturnValues.getInt(1);
             }
@@ -289,25 +365,12 @@ public class PersistenceHandler implements IPersistenceHandler {
         }
         return null;
     }
-    @Override
-    public Integer getKsiazkaId(String tytul){
-        try {
-            PreparedStatement stmt = connection.prepareStatement("SELECT id_ksiazka FROM ksiazki WHERE tytul="+tytul);
-            ResultSet sqlReturnValues = stmt.executeQuery();
 
-            while (sqlReturnValues.next()) {
-                return sqlReturnValues.getInt(1);
-            }
-            System.out.println("nie ma takiego tytulu");
-        } catch (SQLException throwable) {
-            throwable.printStackTrace();
-        }
-        return null;
-    }
     @Override
-    public Integer getKlientId(String imie, String nazwisko){
+    public Integer getKsiazkaId(String tytul) {
         try {
-            PreparedStatement stmt = connection.prepareStatement("SELECT id_klient FROM klienci WHERE imie="+imie+" AND nazwisko="+nazwisko);
+            System.out.println(tytul);
+            PreparedStatement stmt = connection.prepareStatement("SELECT id_ksiazka FROM ksiazki WHERE ksiazki.tytul=" + "'" + tytul + "'");
             ResultSet sqlReturnValues = stmt.executeQuery();
 
             while (sqlReturnValues.next()) {
@@ -320,4 +383,18 @@ public class PersistenceHandler implements IPersistenceHandler {
         return null;
     }
 
+    @Override
+    public Integer getKlientId(String imie, String nazwisko) {
+        try {
+            PreparedStatement stmt = connection.prepareStatement("SELECT id_klient FROM klienci WHERE imie=" + imie + " AND nazwisko=" + nazwisko);
+            ResultSet sqlReturnValues = stmt.executeQuery();
+            while (sqlReturnValues.next()) {
+                return sqlReturnValues.getInt(1);
+            }
+            System.out.println("nie ma takiego tytulu");
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+        return null;
+    }
 }

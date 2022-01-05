@@ -10,15 +10,25 @@ public interface IPersistenceHandler {
 
 //    public List<Klient> getKlienci();
 
+    void setTemp(Integer temp);
+
     public boolean checkClient(String email, String haslo);
 
     public List<Book> getKsiazki();
 
-    public String getGatunek(Integer gatunek_id);
+    public String getGatunekId(Integer gatunek_id);
 
-    public String getWydawnictwo(Integer wydownictwo_id);
+    public String getWydawnictwoById(Integer wydownictwo_id);
+
+    Klient getKlientById(Integer klient_id);
 
     public List<Rezerwacja> getRezerwacjeKlient();
+
+    List<Book> getKsiazkiAutora();
+
+    Book getKsiazkaById(Integer id);
+
+    List<Autor> getAutorzy();
 
     public String getNazwaKsiazka(Integer id_ksiazka);
 
