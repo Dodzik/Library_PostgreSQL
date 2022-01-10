@@ -8,13 +8,10 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import org.example.domain.Friend;
 import org.example.domain.IPersistenceHandler;
-import org.example.domain.Klient;
 import org.example.persistence.PersistenceHandler;
 
 import java.io.IOException;
@@ -22,11 +19,9 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
 import java.util.ResourceBundle;
 
-public class ClientLogPageController implements Initializable {
+public class AdminLogPageController implements Initializable {
 
     IPersistenceHandler persistenceHandler = PersistenceHandler.getInstance();
 
@@ -38,7 +33,7 @@ public class ClientLogPageController implements Initializable {
     private Label lblErrors;
 
     @FXML
-    private TextField txtemail;
+    private TextField txtlogin;
 
     @FXML
     private TextField txthaslo;
@@ -56,30 +51,30 @@ public class ClientLogPageController implements Initializable {
     ResultSet resultSet = null;
 
 
-    public void clientLogIn(ActionEvent actionEvent) throws IOException {
+    public void adminLogIn(ActionEvent actionEvent) throws IOException {
 
         if (logIn()){
 //                root = FXMLLoader.load(getClass().getResource("clientPanel.fxml"));\
 
 
-                root = FXMLLoader.load(getClass().getResource("clientPanel.fxml"));
-                stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-                scene = new Scene(root);
-                stage.setScene(scene);
-                stage.show();
+            root = FXMLLoader.load(getClass().getResource("adminPanel.fxml"));
+            stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
         }
         else {
-            txtemail.setText("");
-            txtemail.setPromptText("ZLY LOGIN LUB HASLO!");
+            txtlogin.setText("");
+            txtlogin.setPromptText("ZLY LOGIN LUB HASLO!");
             txthaslo.setText("");
             txthaslo.setPromptText("ZLY LOGIN LUB HASLO!");
         }
 
     }
     private boolean logIn(){
-        String email = txtemail.getText();
+        String login = txtlogin.getText();
         String haslo = txthaslo.getText();
-        return persistenceHandler.checkClient(email,haslo);
+        return persistenceHandler.checkAdmin(login,haslo);
     }
 
 
@@ -101,4 +96,5 @@ public class ClientLogPageController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+
 }

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.presentation.AdminInfoPageController">
+    <children>
+        <VBox alignment="TOP_CENTER" layoutX="162.0" layoutY="68.0" prefHeight="318.0" prefWidth="277.0">
+            <children>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="id:" />
+                <TextField fx:id="txtid" alignment="CENTER" disable="true" />
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="login:" />
+                <TextField fx:id="txtlogin" alignment="CENTER" disable="true" />
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="stanowisko:" />
+                <TextField fx:id="txtstanowisko" alignment="CENTER" disable="true" />
+            </children></VBox>
+        <Text layoutX="222.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Informacje:">
+            <font>
+                <Font size="32.0" />
+            </font>
+        </Text>
+        <Button layoutX="46.0" layoutY="335.0" mnemonicParsing="false" onAction="#Back" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Back" textFill="WHITE" />
+    </children>
+
+</AnchorPane>

@@ -200,13 +200,13 @@ VALUES (1, 'Lublin', 'Zielona', '2', '22-304');
 INSERT INTO dane (id_dane, miasto, ulica, nr_domu, kod_pocztowy)
 VALUES (2, 'Krakow', 'Czerwona', '34', '30-124');
 
-INSERT INTO klienci (id_klient, dane_id_dane, imie, nazwisko, email)
+INSERT INTO klienci (id_klient, dane_id_dane, imie, nazwisko, email, haslo)
 VALUES (1, 1, 'Mariusz', 'Grosik', 'Grosik@email.com', 'test');
 
-INSERT INTO klienci (id_klient, dane_id_dane, imie, nazwisko, email)
+INSERT INTO klienci (id_klient, dane_id_dane, imie, nazwisko, email, haslo)
 VALUES (2, 2, 'Marcin', 'Zlotowka', 'Zlotowka@email.com', 'test');
 
-INSERT INTO klienci (id_klient, dane_id_dane, imie, nazwisko, email)
+INSERT INTO klienci (id_klient, dane_id_dane, imie, nazwisko, email, haslo)
 VALUES (3, 2, 'Kamil', 'Kowal', 'Kowal@email.com', 'test');
 
 INSERT INTO ksiazki (id_ksiazka, gatunki_id_gatunek, wydawnictwa_id_wydawnictwa, tytul, liczba_stron, opis)

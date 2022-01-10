@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.presentation.AdminLogPageController">
+   <children>
+      <Text layoutX="173.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Logowanie Pracownik:">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Text>
+      <VBox alignment="CENTER" layoutX="189.0" layoutY="100.0" prefHeight="200.0" prefWidth="223.0" spacing="15.0">
+         <children>
+            <TextField fx:id="txtlogin" focusTraversable="false" promptText="login" />
+            <TextField fx:id="txthaslo" promptText="haslo" />
+            <Button mnemonicParsing="false" onAction="#adminLogIn" text="Log In" />
+         </children>
+      </VBox>
+      <Button layoutX="46.0" layoutY="335.0" mnemonicParsing="false" onAction="#Back" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Back" textFill="WHITE" />
+   </children>
+</AnchorPane>

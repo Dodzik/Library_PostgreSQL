@@ -68,6 +68,7 @@ public class ListBooksViewController implements Initializable {
 
         booksTableView.setItems(list);
         updateUI();
+
     }
 
     private void updateUI(){

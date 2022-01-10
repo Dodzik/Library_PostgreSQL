@@ -19,5 +19,6 @@
             <Button layoutX="32.0" layoutY="24.0" mnemonicParsing="false" onAction="#switchToAutorzyView" prefHeight="53.0" prefWidth="74.0" style="-fx-background-color: green;" text="Autorzy" textFill="WHITE" />
          </buttons>
       </ButtonBar>
+      <Button layoutX="46.0" layoutY="335.0" mnemonicParsing="false" onAction="#Back" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Back" textFill="WHITE" />
    </children>
 </AnchorPane>

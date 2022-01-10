@@ -4,11 +4,13 @@ import java.util.List;
 
 public interface IPersistenceHandler {
 
+    boolean checkAdmin(String login, String haslo);
+
     public List<Friend> getFriends();
 
     public boolean createFriend(Friend friend);
 
-//    public List<Klient> getKlienci();
+    public List<Klient> getKlienci();
 
     void setTemp(Integer temp);
 
@@ -34,7 +36,11 @@ public interface IPersistenceHandler {
 
     public Klient getKlientInformacje();
 
+    Pracownik getPracownkInformacje();
+
     public Dane getKlientDane(Integer id_klient);
+
+    Stanowisko getStanowiskoPracownik(Integer id_pracownik);
 
     public boolean createRezerwacja(Rezerwacja rezerwacja);
 
