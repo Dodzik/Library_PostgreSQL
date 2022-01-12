@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.presentation.AdminKsiazkiPageController">
+    <children>
+        <Text layoutX="211.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista Ksiazek">
+            <font>
+                <Font name="System Bold" size="30.0" />
+            </font>
+        </Text>
+        <Button layoutX="46.0" layoutY="335.0" mnemonicParsing="false" onAction="#back" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Back" textFill="WHITE" />
+        <TableView fx:id="ksiazkiTableView" layoutX="137.0" layoutY="212.0" onMouseClicked="#getSelected" prefHeight="158.0" prefWidth="449.0">
+            <columns>
+                <TableColumn fx:id="id" prefWidth="30.0" text="Id" />
+                <TableColumn fx:id="id_gatunek" prefWidth="81.0" text="Id_gatunek" />
+                <TableColumn fx:id="id_wydawnictwo" prefWidth="98.0" text="Id_wydawnictwo" />
+            <TableColumn fx:id="tytul" minWidth="0.0" prefWidth="81.0" text="tytul" />
+            <TableColumn fx:id="liczba_stron" prefWidth="78.0" text="liczba_stron" />
+            <TableColumn fx:id="opis" text="opis" />
+            </columns>
+        </TableView>
+        <Button layoutX="46.0" layoutY="102.0" mnemonicParsing="false" onAction="#createKsiazka" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Create" textFill="WHITE" />
+        <Button layoutX="46.0" layoutY="237.0" mnemonicParsing="false" onAction="#deleteKsiazka" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Delete" textFill="WHITE" />
+        <VBox layoutX="137.0" layoutY="75.0" prefHeight="45.0" prefWidth="181.0">
+            <children>
+                <TextField fx:id="fieldIdGatunek" promptText="Id_gatunek" />
+                <TextField fx:id="fieldIdWydawnictwo" promptText="Id_wydawnicto" />
+            <TextField fx:id="fieldTytul" promptText="tytul" />
+            <TextField fx:id="fieldLiczbaStron" promptText="liczba_stron" />
+            <TextField fx:id="fieldOpis" promptText="opis" />
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

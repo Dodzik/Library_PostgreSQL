@@ -8,6 +8,8 @@ public interface IPersistenceHandler {
 
     public List<Friend> getFriends();
 
+    boolean createRezerwacjaAdmin(Rezerwacja rezerwacja);
+
     public boolean createFriend(Friend friend);
 
     public List<Klient> getKlienci();
@@ -16,7 +18,7 @@ public interface IPersistenceHandler {
 
     public boolean checkClient(String email, String haslo);
 
-    public List<Book> getKsiazki();
+    public List<Ksiazka> getKsiazki();
 
     public String getGatunekId(Integer gatunek_id);
 
@@ -26,11 +28,33 @@ public interface IPersistenceHandler {
 
     public List<Rezerwacja> getRezerwacjeKlient();
 
-    List<Book> getKsiazkiAutora();
+    void deleteKlient(Integer id_klient);
 
-    Book getKsiazkaById(Integer id);
+    boolean createKlient(Klient klient);
+
+    void deleteRezerwacjeKlienta(Integer id_klient);
+
+    List<Rezerwacja> getRezerwacje();
+
+    void deleteAutor(Integer id_autor);
+
+    void deleteKsiazka(Integer id_ksiazka);
+
+    boolean createAutor(Autor Autor);
+
+    boolean createKsiazka(Ksiazka ksiazka);
+
+    List<Ksiazka> getKsiazkiAutora();
+
+    Ksiazka getKsiazkaById(Integer id);
 
     List<Autor> getAutorzy();
+
+    List<Stanowisko> getStanowiska();
+
+    void deleteStanowisko(Integer id_stanowisko);
+
+    boolean createStanowisko(Stanowisko stanowisko);
 
     public String getNazwaKsiazka(Integer id_ksiazka);
 
@@ -46,7 +70,23 @@ public interface IPersistenceHandler {
 
     public Integer getMaxIndexRezerwacje();
 
+    Integer getMaxIndexKlienci();
+
+    Integer getMaxIndexStanowiska();
+
+    Integer getMaxIndexAutorzy();
+
+    Integer getMaxIndexKsiazki();
+
     public Integer getKsiazkaId(String tytul);
 
     public Integer getKlientId(String imie, String nazwisko);
+
+    Integer getMaxIndexDane();
+
+    List<Dane> getDane();
+
+    void deleteDane(Integer id_dane);
+
+    boolean createDane(Dane dane);
 }

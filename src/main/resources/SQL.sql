@@ -247,3 +247,19 @@ INSERT INTO pracownicy_has_klienci (pracownicy_id_pracownik, klienci_id_klient, 
                                     data_oddania)
 VALUES (1, 2, 1, '2021-12-26', '2022-01-15');
 
+
+-- CREATE OR REPLACE FUNCTION usuwanieRezerwacjiKlienta (id_k int) RETURNS text AS $$
+--
+-- BEGIN
+--     DELETE FROM klienci WHERE id_klient = id_k;
+--     IF NOT FOUND THEN
+--         RAISE EXCEPTION 'Klienta % nie ma w bazie', id_k;
+--     END IF;
+--     RETURN 'Success';
+-- END;
+-- $$
+--     LANGUAGE 'plpgsql';
+--
+-- CREATE TRIGGER usuwanieRezerwacji BEFORE DELETE ON klienci
+--     FOR EACH ROW
+-- EXECUTE PROCEDURE usuwanieRezerwacjiKlienta();

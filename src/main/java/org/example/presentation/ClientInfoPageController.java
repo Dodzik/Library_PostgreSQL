@@ -52,7 +52,7 @@ public class ClientInfoPageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Klient klient = persistenceHandler.getKlientInformacje();
-        Dane dane = persistenceHandler.getKlientDane(klient.getId());
+        Dane dane = persistenceHandler.getKlientDane(klient.getId_dane());
 
         email.setText( klient.getEmail());
         imie.setText( klient.getName());

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.presentation.AdminDanePageController">
+    <children>
+        <Text layoutX="211.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista Ksiazek">
+            <font>
+                <Font name="System Bold" size="30.0" />
+            </font>
+        </Text>
+        <Button layoutX="46.0" layoutY="335.0" mnemonicParsing="false" onAction="#back" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Back" textFill="WHITE" />
+        <TableView fx:id="daneTableView" layoutX="137.0" layoutY="212.0" onMouseClicked="#getSelected" prefHeight="158.0" prefWidth="449.0">
+            <columns>
+                <TableColumn fx:id="id" prefWidth="30.0" text="Id" />
+                <TableColumn fx:id="miasto" prefWidth="91.0" text="miasto" />
+                <TableColumn fx:id="ulica" prefWidth="104.0" text="ulica" />
+                <TableColumn fx:id="nr_domu" minWidth="0.0" prefWidth="83.0" text="nr_domu" />
+                <TableColumn fx:id="kod_pocztowy" prefWidth="140.0" text="kod_opocztowy" />
+            </columns>
+        </TableView>
+        <Button layoutX="46.0" layoutY="102.0" mnemonicParsing="false" onAction="#createDane" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Create" textFill="WHITE" />
+        <Button layoutX="46.0" layoutY="237.0" mnemonicParsing="false" onAction="#deleteDane" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Delete" textFill="WHITE" />
+        <VBox layoutX="137.0" layoutY="75.0" prefHeight="45.0" prefWidth="181.0">
+            <children>
+                <TextField fx:id="fieldMiasto" promptText="miasto" />
+                <TextField fx:id="fieldUlica" promptText="ulica" />
+                <TextField fx:id="fieldNrDomu" promptText="nr_domu" />
+                <TextField fx:id="fieldKodPocztowy" promptText="kod_pocztowy" />
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

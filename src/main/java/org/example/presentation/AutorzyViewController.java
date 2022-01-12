@@ -15,7 +15,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.example.domain.Autor;
-import org.example.domain.Book;
 import org.example.domain.IPersistenceHandler;
 import org.example.persistence.PersistenceHandler;
 

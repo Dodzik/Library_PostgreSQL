@@ -33,6 +33,41 @@ public class AdminPanelController {
         stage.setScene(scene);
         stage.show();
     }
+    public void idzDoRezerwacji(ActionEvent actionEvent) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("adminRezerwacjePage.fxml"));
+        stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    public void idzDoAutorzy(ActionEvent actionEvent) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("adminAutorzyPage.fxml"));
+        stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    public void idzDoKsiazki(ActionEvent actionEvent) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("adminKsiazkiPage.fxml"));
+        stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    public void idzDoStanowisk(ActionEvent actionEvent) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("adminStanowiskaPage.fxml"));
+        stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    public void idzDoDane(ActionEvent actionEvent) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("adminDanePage.fxml"));
+        stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
 
     public void Back(ActionEvent actionEvent) throws IOException {
         root = FXMLLoader.load(getClass().getResource("mainPage.fxml"));

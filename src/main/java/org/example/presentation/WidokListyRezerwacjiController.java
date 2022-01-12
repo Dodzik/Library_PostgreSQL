@@ -15,8 +15,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import org.example.domain.Book;
-import org.example.domain.Friend;
 import org.example.domain.IPersistenceHandler;
 import org.example.domain.Rezerwacja;
 import org.example.persistence.PersistenceHandler;
@@ -25,7 +23,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ResourceBundle;
 
 public class WidokListyRezerwacjiController implements Initializable {
@@ -88,12 +85,20 @@ public class WidokListyRezerwacjiController implements Initializable {
     @FXML
     public void dodajRezerwacje(ActionEvent actionEvent) throws ParseException {
         String sdate = fieldData.getText();
-        Date date1 = Date.valueOf(sdate);
-
+        Date date1;
+        try {
+            date1 = Date.valueOf(sdate);
+        }
+        catch (Exception e){
+            fieldData.clear();
+            fieldData.setPromptText("Niepoprawna data");
+            return;
+        }
         Rezerwacja rezerwacja = new Rezerwacja(null,persistenceHandler.getKsiazkaId(fieldKsiazka.getText()),null,date1);
 
         if(persistenceHandler.createRezerwacja(rezerwacja)){
             System.out.println("Rezerwacja inserted into database");
+            fieldData.setPromptText("Data");
         } else {
             System.out.println("Something went wrong");
         }
@@ -141,7 +146,6 @@ public class WidokListyRezerwacjiController implements Initializable {
                 }
             }
         });
-
 
     }
 //    @FXML

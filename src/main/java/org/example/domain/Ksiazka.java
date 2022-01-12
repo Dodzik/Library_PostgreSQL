@@ -1,6 +1,6 @@
 package org.example.domain;
 
-public class Book {
+public class Ksiazka {
     private Integer id;
     private Integer gatunek_id;
     private Integer wydawnictwo_id;
@@ -8,7 +8,7 @@ public class Book {
     private Integer liczbaStron;
     private String opis;
 
-    public Book(Integer id, Integer gatunek_id, Integer wydawnictwo_id, String tytul, Integer liczbaStron, String opis) {
+    public Ksiazka(Integer id, Integer gatunek_id, Integer wydawnictwo_id, String tytul, Integer liczbaStron, String opis) {
         this.id = id;
         this.gatunek_id = gatunek_id;
         this.wydawnictwo_id = wydawnictwo_id;

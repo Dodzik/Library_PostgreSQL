@@ -30,27 +30,27 @@ public class ListBooksViewController implements Initializable {
     private ListView booksListView;
 
     @FXML
-    private TableView<Book> booksTableView;
+    private TableView<Ksiazka> booksTableView;
 
     @FXML
-    private TableColumn<Book,Integer> id;
+    private TableColumn<Ksiazka,Integer> id;
 
     @FXML
-    private TableColumn<Book,Integer> gatunek;
+    private TableColumn<Ksiazka,Integer> gatunek;
 
     @FXML
-    private TableColumn<Book,Integer> wydawnictwo;
+    private TableColumn<Ksiazka,Integer> wydawnictwo;
 
     @FXML
-    private TableColumn<Book,String> tytul;
+    private TableColumn<Ksiazka,String> tytul;
 
     @FXML
-    private TableColumn<Book,Integer> liczbaStron;
+    private TableColumn<Ksiazka,Integer> liczbaStron;
 
     @FXML
-    private TableColumn<Book,String> opis;
+    private TableColumn<Ksiazka,String> opis;
 
-    ObservableList<Book> list = FXCollections.observableList(
+    ObservableList<Ksiazka> list = FXCollections.observableList(
            persistenceHandler.getKsiazki()
     );
 
@@ -59,12 +59,12 @@ public class ListBooksViewController implements Initializable {
 
 //        booksListView.getItems().addAll(persistenceHandler.getKsiazki());
 
-        id.setCellValueFactory(new PropertyValueFactory<Book,Integer>("id"));
+        id.setCellValueFactory(new PropertyValueFactory<Ksiazka,Integer>("id"));
         gatunek.setCellValueFactory(new PropertyValueFactory<>("gatunek_id"));
-        wydawnictwo.setCellValueFactory(new PropertyValueFactory<Book,Integer>("wydawnictwo_id"));
-        tytul.setCellValueFactory(new PropertyValueFactory<Book,String>("tytul"));
-        liczbaStron.setCellValueFactory(new PropertyValueFactory<Book,Integer>("liczbaStron"));
-        opis.setCellValueFactory(new PropertyValueFactory<Book,String>("opis"));
+        wydawnictwo.setCellValueFactory(new PropertyValueFactory<Ksiazka,Integer>("wydawnictwo_id"));
+        tytul.setCellValueFactory(new PropertyValueFactory<Ksiazka,String>("tytul"));
+        liczbaStron.setCellValueFactory(new PropertyValueFactory<Ksiazka,Integer>("liczbaStron"));
+        opis.setCellValueFactory(new PropertyValueFactory<Ksiazka,String>("opis"));
 
         booksTableView.setItems(list);
         updateUI();
