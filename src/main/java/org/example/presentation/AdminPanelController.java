@@ -68,6 +68,20 @@ public class AdminPanelController {
         stage.setScene(scene);
         stage.show();
     }
+    public void idzDoWypozyczenia(ActionEvent actionEvent) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("adminWypozyczeniaPage.fxml"));
+        stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    public void idzDoAutorzyKsiazek(ActionEvent actionEvent) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("adminAutorzyKsiazkiPage.fxml"));
+        stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
 
     public void Back(ActionEvent actionEvent) throws IOException {
         root = FXMLLoader.load(getClass().getResource("mainPage.fxml"));

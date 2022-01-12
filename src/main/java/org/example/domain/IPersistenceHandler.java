@@ -88,5 +88,17 @@ public interface IPersistenceHandler {
 
     void deleteDane(Integer id_dane);
 
+    void deleteWypozyczenie(Integer id_pracownik, Integer id_klient, Integer id_ksiazka);
+
     boolean createDane(Dane dane);
+
+    List<Wypozyczenie> getWypozyczenia();
+
+    void deleteAutorzyKsiazek(Integer id_autor, Integer id_ksiazka);
+
+    boolean createWypozyczenie(Wypozyczenie wypozyczenie);
+
+    List<AutorzyKsiazek> getAutorzyKsiazek();
+
+    boolean createAutorzyKsiazek(AutorzyKsiazek autorzyKsiazek);
 }

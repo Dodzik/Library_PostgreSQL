@@ -137,7 +137,7 @@ public class AdminListaKlientowController implements Initializable {
     private Scene scene;
     private Parent root;
 
-    public void Back(ActionEvent actionEvent) throws IOException {
+    public void back(ActionEvent actionEvent) throws IOException {
         root = FXMLLoader.load(getClass().getResource("adminPanel.fxml"));
         stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         scene = new Scene(root);

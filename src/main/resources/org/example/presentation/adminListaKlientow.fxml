@@ -11,7 +11,7 @@
                 <Font name="System Bold" size="30.0" />
             </font>
         </Text>
-        <Button layoutX="46.0" layoutY="335.0" mnemonicParsing="false" onAction="#Back" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Back" textFill="WHITE" />
+        <Button layoutX="46.0" layoutY="335.0" mnemonicParsing="false" onAction="#back" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Back" textFill="WHITE" />
         <TableView fx:id="klientTableView" layoutX="137.0" layoutY="218.0" onMouseClicked="#getSelected" prefHeight="158.0" prefWidth="449.0">
             <columns>
                 <TableColumn fx:id="id" prefWidth="34.0" text="Id" />

@@ -239,11 +239,11 @@ VALUES (1, 1, 'admin', 'admin');
 INSERT INTO pracownicy (id_pracownik, stanowiska_id_stanowisko, login, haslo)
 VALUES (2, 1, 'admin2', 'admin2');
 
-INSERT INTO pracownicy_has_klienci (pracownicy_id_pracownik, klienci_id_klient, ksiazki_id_ksiazka, data_wyporzyczenia,
+INSERT INTO pracownicy_has_klienci (pracownicy_id_pracownik, klienci_id_klient, ksiazki_id_ksiazka, data_wypozyczenia,
                                     data_oddania)
 VALUES (1, 1, 1, '2021-12-21', '2021-12-31');
 
-INSERT INTO pracownicy_has_klienci (pracownicy_id_pracownik, klienci_id_klient, ksiazki_id_ksiazka, data_wyporzyczenia,
+INSERT INTO pracownicy_has_klienci (pracownicy_id_pracownik, klienci_id_klient, ksiazki_id_ksiazka, data_wypozyczenia,
                                     data_oddania)
 VALUES (1, 2, 1, '2021-12-26', '2022-01-15');
 

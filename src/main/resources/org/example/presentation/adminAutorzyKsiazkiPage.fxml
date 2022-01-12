@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.presentation.AdminAutorzyKsiazkiPageController">
+
+    <children>
+        <Text layoutX="188.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista Rezerwacji">
+            <font>
+                <Font name="System Bold" size="30.0" />
+            </font>
+        </Text>
+        <Button layoutX="46.0" layoutY="335.0" mnemonicParsing="false" onAction="#back" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Back" textFill="WHITE" />
+        <TableView fx:id="autorzyKsiazekTableView" layoutX="137.0" layoutY="218.0" onMouseClicked="#getSelected" prefHeight="158.0" prefWidth="449.0">
+            <columns>
+                <TableColumn fx:id="id_autor" prefWidth="232.0" text="Id_autor" />
+                <TableColumn fx:id="id_Ksiazki" prefWidth="216.0" text="id_Ksiazka" />
+            </columns>
+        </TableView>
+        <Button layoutX="46.0" layoutY="102.0" mnemonicParsing="false" onAction="#createAutorzyKsiazek" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Create" textFill="WHITE" />
+        <Button layoutX="46.0" layoutY="237.0" mnemonicParsing="false" onAction="#deleteAutorzyKsiazki" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Delete" textFill="WHITE" />
+        <VBox layoutX="151.0" layoutY="95.0" prefHeight="49.0" prefWidth="181.0">
+            <children>
+                <TextField fx:id="fieldIdAutor" promptText="id_autor" />
+                <TextField fx:id="fieldIdKsiazka" promptText="id_ksiazka" />
+            </children>
+        </VBox>
+    </children>
+
+</AnchorPane>

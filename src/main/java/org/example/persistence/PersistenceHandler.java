@@ -750,16 +750,16 @@ public class PersistenceHandler implements IPersistenceHandler {
     @Override
     public boolean createDane(Dane dane){
         try {
-            PreparedStatement insertStanowisko= connection.prepareStatement(
+            PreparedStatement insertDane= connection.prepareStatement(
                     "INSERT INTO dane (id_dane, miasto, ulica, nr_domu, kod_pocztowy) VALUES (?,?,?,?,?)");
-            insertStanowisko.setInt(1,getMaxIndexDane()+1);
-            insertStanowisko.setString(2,dane.getMiasto());
-            insertStanowisko.setString(3,dane.getUlica());
-            insertStanowisko.setString(4,dane.getNr_domu());
-            insertStanowisko.setString(5,dane.getKod_pocztowy());
+            insertDane.setInt(1,getMaxIndexDane()+1);
+            insertDane.setString(2,dane.getMiasto());
+            insertDane.setString(3,dane.getUlica());
+            insertDane.setString(4,dane.getNr_domu());
+            insertDane.setString(5,dane.getKod_pocztowy());
 
 
-            insertStanowisko.execute();
+            insertDane.execute();
 
         } catch (SQLException throwable) {
             throwable.printStackTrace();
@@ -767,4 +767,102 @@ public class PersistenceHandler implements IPersistenceHandler {
         }
         return true;
     }
+    @Override
+    public List<Wypozyczenie> getWypozyczenia() {
+        try {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM pracownicy_has_klienci");
+            ResultSet sqlReturnValues = stmt.executeQuery();
+
+            List<Wypozyczenie> returnValues = new ArrayList<>();
+
+            while (sqlReturnValues.next()) {
+                returnValues.add(new Wypozyczenie(sqlReturnValues.getInt(1),
+                        sqlReturnValues.getInt(2),sqlReturnValues.getInt(3)
+                        ,sqlReturnValues.getDate(4),sqlReturnValues.getDate(5)));
+            }
+            return returnValues;
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+        return null;
+    }
+    @Override
+    public void deleteWypozyczenie(Integer id_pracownik, Integer id_klient, Integer id_ksiazka){
+        try {
+            PreparedStatement stmt = connection.prepareStatement("DELETE FROM pracownicy_has_klienci WHERE" +
+                    " pracownicy_id_pracownik=" + id_pracownik+" AND klienci_id_klient="+id_klient+"" +
+                    " AND ksiazki_id_ksiazka="+id_ksiazka);
+            stmt.executeUpdate();
+            System.out.println("Usunieto Wypozyczenie");
+        }
+        catch (SQLException throwables){
+            throwables.printStackTrace();
+        }
+    }
+    @Override
+    public boolean createWypozyczenie(Wypozyczenie wypozyczenie){
+        try {
+            PreparedStatement insertWypozyczenie= connection.prepareStatement(
+                    "INSERT INTO pracownicy_has_klienci" +
+                            " (pracownicy_id_pracownik, klienci_id_klient, ksiazki_id_ksiazka, data_wypozyczenia, data_oddania) " +
+                            "VALUES (?,?,?,?,?)");
+            insertWypozyczenie.setInt(1,wypozyczenie.getId_pracownik());
+            insertWypozyczenie.setInt(2,wypozyczenie.getId_klient());
+            insertWypozyczenie.setInt(3,wypozyczenie.getId_ksiazka());
+            insertWypozyczenie.setDate(4,wypozyczenie.getData_wypozyczenia());
+            insertWypozyczenie.setDate(5,wypozyczenie.getData_oddania());
+            insertWypozyczenie.execute();
+
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public List<AutorzyKsiazek> getAutorzyKsiazek() {
+        try {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM autorzy_ksiazki");
+            ResultSet sqlReturnValues = stmt.executeQuery();
+
+            List<AutorzyKsiazek> returnValues = new ArrayList<>();
+
+            while (sqlReturnValues.next()) {
+                returnValues.add(new AutorzyKsiazek(sqlReturnValues.getInt(1),
+                        sqlReturnValues.getInt(2)));
+            }
+            return returnValues;
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+        return null;
+    }
+    @Override
+    public void deleteAutorzyKsiazek(Integer id_autor, Integer id_ksiazka){
+        try {
+            PreparedStatement stmt = connection.prepareStatement("DELETE FROM autorzy_ksiazki WHERE" +
+                    " autorzy_id_autor=" + id_autor+" AND ksiazki_id_ksiazka="+id_ksiazka);
+            stmt.executeUpdate();
+            System.out.println("Usunieto AutorzyKsiazek");
+        }
+        catch (SQLException throwables){
+            throwables.printStackTrace();
+        }
+    }
+    @Override
+    public boolean createAutorzyKsiazek(AutorzyKsiazek autorzyKsiazek){
+        try {
+            PreparedStatement insertAutorzyKsiazek= connection.prepareStatement(
+                    "INSERT INTO autorzy_ksiazki (autorzy_id_autor, ksiazki_id_ksiazka) VALUES (?,?);");
+            insertAutorzyKsiazek.setInt(1,autorzyKsiazek.getAutor_id());
+            insertAutorzyKsiazek.setInt(2,autorzyKsiazek.getKsiazka_id());
+            insertAutorzyKsiazek.execute();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
 }

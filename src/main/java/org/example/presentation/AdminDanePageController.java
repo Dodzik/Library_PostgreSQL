@@ -15,7 +15,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import org.example.domain.Autor;
 import org.example.domain.Dane;
 import org.example.persistence.PersistenceHandler;
 
@@ -73,6 +72,11 @@ public class AdminDanePageController implements Initializable {
     public void createDane(ActionEvent actionEvent) {
         Dane dane = new Dane(null,fieldMiasto.getText(),fieldUlica.getText(),
                 fieldNrDomu.getText(),fieldKodPocztowy.getText());
+        if (!dane.getKod_pocztowy().contains("-")){
+            fieldKodPocztowy.setPromptText("Niepoprawne kod_pocztowy");
+            fieldKodPocztowy.clear();
+            return;
+        }
 
         if (persistenceHandler.createDane(dane)){
             System.out.println("Dodano Dane");
