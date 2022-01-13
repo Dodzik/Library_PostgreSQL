@@ -119,9 +119,6 @@ public class PersistenceHandler implements IPersistenceHandler {
             List<Klient> returnValues = new ArrayList<>();
 
             while (sqlReturnValues.next()) {
-                System.out.println(new Klient(sqlReturnValues.getInt(1), sqlReturnValues.getInt(2),
-                        sqlReturnValues.getString(3), sqlReturnValues.getString(4),
-                        sqlReturnValues.getString(5), sqlReturnValues.getString(6)));
                 returnValues.add(new Klient(sqlReturnValues.getInt(1), sqlReturnValues.getInt(2),
                         sqlReturnValues.getString(3), sqlReturnValues.getString(4),
                         sqlReturnValues.getString(5), sqlReturnValues.getString(6)));
@@ -865,4 +862,180 @@ public class PersistenceHandler implements IPersistenceHandler {
         return true;
     }
 
+    @Override
+    public List<Wydawnictwo> getWydawnictwa() {
+        try {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM wydawnictwa");
+            ResultSet sqlReturnValues = stmt.executeQuery();
+
+            List<Wydawnictwo> returnValues = new ArrayList<>();
+
+            while (sqlReturnValues.next()) {
+                returnValues.add(new Wydawnictwo(sqlReturnValues.getInt(1),
+                        sqlReturnValues.getString(2)));
+            }
+            return returnValues;
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+        return null;
+    }
+    @Override
+    public Integer getMaxIndexWydawnictwa() {
+        try {
+            PreparedStatement stmt = connection.prepareStatement("SELECT MAX(id_wydawnictwa) FROM wydawnictwa");
+            ResultSet sqlReturnValues = stmt.executeQuery();
+            if (sqlReturnValues.next()) {
+                return sqlReturnValues.getInt(1);
+            }
+            System.out.println("nie ma takiego datebase");
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+        return null;
+    }
+    @Override
+    public void deleteWydawnictwo(Integer id_wydawnictwo){
+        try {
+            PreparedStatement stmt = connection.prepareStatement("DELETE FROM wydawnictwa WHERE id_wydawnictwa="+id_wydawnictwo);
+            stmt.executeUpdate();
+            System.out.println("Usunieto Wydawnictwo");
+        }
+        catch (SQLException throwables){
+            throwables.printStackTrace();
+        }
+    }
+    @Override
+    public boolean createWydawnictwo(Wydawnictwo wydawnictwo){
+        try {
+            PreparedStatement insertWydawnictwo= connection.prepareStatement(
+                    "INSERT INTO wydawnictwa (id_wydawnictwa, nazwa) VALUES (?,?);");
+            insertWydawnictwo.setInt(1,getMaxIndexWydawnictwa()+1);
+            insertWydawnictwo.setString(2,wydawnictwo.getNazwa());
+            insertWydawnictwo.execute();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public List<Gatunek> getGatunki() {
+        try {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM gatunki");
+            ResultSet sqlReturnValues = stmt.executeQuery();
+
+            List<Gatunek> returnValues = new ArrayList<>();
+
+            while (sqlReturnValues.next()) {
+                returnValues.add(new Gatunek(sqlReturnValues.getInt(1),
+                        sqlReturnValues.getString(2)));
+            }
+            return returnValues;
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+        return null;
+    }
+    @Override
+    public Integer getMaxIndexGatunki() {
+        try {
+            PreparedStatement stmt = connection.prepareStatement("SELECT MAX(id_gatunek) FROM gatunki");
+            ResultSet sqlReturnValues = stmt.executeQuery();
+            if (sqlReturnValues.next()) {
+                return sqlReturnValues.getInt(1);
+            }
+            System.out.println("nie ma takiego datebase");
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+        return null;
+    }
+    @Override
+    public void deleteGatunek(Integer id_gatunek){
+        try {
+            PreparedStatement stmt = connection.prepareStatement("DELETE FROM gatunki WHERE id_gatunek="+id_gatunek);
+            stmt.executeUpdate();
+            System.out.println("Usunieto Gatunek");
+        }
+        catch (SQLException throwables){
+            throwables.printStackTrace();
+        }
+    }
+    @Override
+    public boolean createGatunek(Gatunek gatunek){
+        try {
+            PreparedStatement insertGatunek= connection.prepareStatement(
+                    "INSERT INTO gatunki (id_gatunek, nazwa) VALUES (?,?);");
+            insertGatunek.setInt(1,getMaxIndexGatunki()+1);
+            insertGatunek.setString(2,gatunek.getNazwa());
+            insertGatunek.execute();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+    @Override
+    public List<Pracownik> getPracownicy() {
+        try {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM pracownicy");
+            ResultSet sqlReturnValues = stmt.executeQuery();
+
+            List<Pracownik> returnValues = new ArrayList<>();
+
+            while (sqlReturnValues.next()) {
+                returnValues.add(new Pracownik(sqlReturnValues.getInt(1),
+                        sqlReturnValues.getInt(2),sqlReturnValues.getString(3),
+                        sqlReturnValues.getString(4)));
+            }
+            return returnValues;
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+        return null;
+    }
+    @Override
+    public Integer getMaxIndexPracownicy() {
+        try {
+            PreparedStatement stmt = connection.prepareStatement("SELECT MAX(id_pracownik) FROM pracownicy");
+            ResultSet sqlReturnValues = stmt.executeQuery();
+            if (sqlReturnValues.next()) {
+                return sqlReturnValues.getInt(1);
+            }
+            System.out.println("nie ma takiego datebase");
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+        return null;
+    }
+    @Override
+    public void deletePracownik(Integer id_pracownik){
+        try {
+            PreparedStatement stmt = connection.prepareStatement("DELETE FROM pracownicy WHERE id_pracownik="+id_pracownik);
+            stmt.executeUpdate();
+            System.out.println("Usunieto Pracownika");
+        }
+        catch (SQLException throwables){
+            throwables.printStackTrace();
+        }
+    }
+    @Override
+    public boolean createPracownik(Pracownik pracownik){
+        try {
+            PreparedStatement insertPracownik= connection.prepareStatement(
+                    "INSERT INTO pracownicy (id_pracownik, stanowiska_id_stanowisko,login,haslo) VALUES (?,?,?,?);");
+            insertPracownik.setInt(1,getMaxIndexPracownicy()+1);
+            insertPracownik.setInt(2,pracownik.getStanowisko_id());
+            insertPracownik.setString(3,pracownik.getLogin());
+            insertPracownik.setString(4,pracownik.getHaslo());
+            insertPracownik.execute();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 }
+

@@ -100,5 +100,29 @@ public interface IPersistenceHandler {
 
     List<AutorzyKsiazek> getAutorzyKsiazek();
 
+    void deleteWydawnictwo(Integer id_wydawnictwo);
+
     boolean createAutorzyKsiazek(AutorzyKsiazek autorzyKsiazek);
+
+    List<Wydawnictwo> getWydawnictwa();
+
+    List<Gatunek> getGatunki();
+
+    Integer getMaxIndexWydawnictwa();
+
+    boolean createWydawnictwo(Wydawnictwo wydawnictwo);
+
+    Integer getMaxIndexGatunki();
+
+    void deleteGatunek(Integer id_gatunek);
+
+    void deletePracownik(Integer id_pracownik);
+
+    boolean createGatunek(Gatunek gatunek);
+
+    List<Pracownik> getPracownicy();
+
+    Integer getMaxIndexPracownicy();
+
+    boolean createPracownik(Pracownik pracownik);
 }

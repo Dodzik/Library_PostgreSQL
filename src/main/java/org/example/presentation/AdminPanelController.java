@@ -82,6 +82,27 @@ public class AdminPanelController {
         stage.setScene(scene);
         stage.show();
     }
+    public void idzDoWydawnictwa(ActionEvent actionEvent) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("adminWydawnictwaPage.fxml"));
+        stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    public void idzDoGatunki(ActionEvent actionEvent) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("adminGatunkiPage.fxml"));
+        stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    public void idzDoPracownicy(ActionEvent actionEvent) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("adminPracownicyPage.fxml"));
+        stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
 
     public void Back(ActionEvent actionEvent) throws IOException {
         root = FXMLLoader.load(getClass().getResource("mainPage.fxml"));
