@@ -4,24 +4,24 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.presentation.AdminAutorzyPageController">
+<AnchorPane prefHeight="534.0" prefWidth="810.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.presentation.AdminAutorzyPageController">
     <children>
-        <Text layoutX="188.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista Autorow">
+        <Text layoutX="307.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista Autorow">
             <font>
                 <Font name="System Bold" size="30.0" />
             </font>
         </Text>
-        <Button layoutX="46.0" layoutY="335.0" mnemonicParsing="false" onAction="#back" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Back" textFill="WHITE" />
-        <TableView fx:id="autorzyTableView" layoutX="137.0" layoutY="218.0" onMouseClicked="#getSelected" prefHeight="158.0" prefWidth="449.0">
+        <Button layoutX="15.0" layoutY="485.0" mnemonicParsing="false" onAction="#back" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Back" textFill="WHITE" />
+        <TableView fx:id="autorzyTableView" layoutX="137.0" layoutY="218.0" onMouseClicked="#getSelected" prefHeight="270.0" prefWidth="634.0">
             <columns>
                 <TableColumn fx:id="id" prefWidth="69.0" text="Id" />
-                <TableColumn fx:id="imie" prefWidth="186.0" text="Imie" />
-                <TableColumn fx:id="nazwisko" prefWidth="193.0" text="Nazwisko" />
+                <TableColumn fx:id="imie" prefWidth="299.0" text="Imie" />
+                <TableColumn fx:id="nazwisko" prefWidth="265.0" text="Nazwisko" />
             </columns>
         </TableView>
-        <Button layoutX="46.0" layoutY="102.0" mnemonicParsing="false" onAction="#createAutor" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Create" textFill="WHITE" />
-        <Button layoutX="46.0" layoutY="237.0" mnemonicParsing="false" onAction="#deleteAutor" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Delete" textFill="WHITE" />
-        <VBox layoutX="153.0" layoutY="95.0" prefHeight="45.0" prefWidth="181.0">
+        <Button layoutX="228.0" layoutY="103.0" mnemonicParsing="false" onAction="#createAutor" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Create" textFill="WHITE" />
+        <Button layoutX="46.0" layoutY="336.0" mnemonicParsing="false" onAction="#deleteAutor" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Delete" textFill="WHITE" />
+        <VBox layoutX="315.0" layoutY="95.0" prefHeight="45.0" prefWidth="181.0">
             <children>
                 <TextField fx:id="fieldImie" promptText="Imie" />
                 <TextField fx:id="fieldNazwisko" promptText="Nazwisko" />

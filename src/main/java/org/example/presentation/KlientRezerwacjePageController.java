@@ -25,7 +25,7 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.util.ResourceBundle;
 
-public class WidokListyRezerwacjiController implements Initializable {
+public class KlientRezerwacjePageController implements Initializable {
 
     IPersistenceHandler persistenceHandler = PersistenceHandler.getInstance();
 
@@ -56,7 +56,7 @@ public class WidokListyRezerwacjiController implements Initializable {
 
 
     public void back(ActionEvent actionEvent) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("clientPanel.fxml"));
+        root = FXMLLoader.load(getClass().getResource("klientPanel.fxml"));
         stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);

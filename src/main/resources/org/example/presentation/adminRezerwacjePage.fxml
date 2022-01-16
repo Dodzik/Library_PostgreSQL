@@ -4,25 +4,25 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane onDragDetected="#deleteRezerwacja" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.presentation.AdminRezerwacjePageController">
+<AnchorPane onDragDetected="#deleteRezerwacja" prefHeight="534.0" prefWidth="810.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.presentation.AdminRezerwacjePageController">
     <children>
-        <Text layoutX="188.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista Rezerwacji">
+        <Text layoutX="293.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista Rezerwacji">
             <font>
                 <Font name="System Bold" size="30.0" />
             </font>
         </Text>
-        <Button layoutX="46.0" layoutY="335.0" mnemonicParsing="false" onAction="#back" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Back" textFill="WHITE" />
-        <TableView fx:id="rezerwacjeTableView" layoutX="137.0" layoutY="218.0" onMouseClicked="#getSelected" prefHeight="158.0" prefWidth="449.0">
+        <Button layoutX="15.0" layoutY="482.0" mnemonicParsing="false" onAction="#back" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Back" textFill="WHITE" />
+        <TableView fx:id="rezerwacjeTableView" layoutX="137.0" layoutY="218.0" onMouseClicked="#getSelected" prefHeight="281.0" prefWidth="644.0">
             <columns>
-                <TableColumn fx:id="id" prefWidth="69.0" text="Id" />
-                <TableColumn fx:id="id_Ksiazki" prefWidth="101.0" text="id_Ksiazka" />
-                <TableColumn fx:id="id_Klient" prefWidth="102.0" text="id_Klient" />
-                <TableColumn fx:id="date" prefWidth="176.0" text="Date" />
+                <TableColumn fx:id="id" prefWidth="59.0" text="Id" />
+                <TableColumn fx:id="id_Ksiazki" prefWidth="142.0" text="id_Ksiazka" />
+                <TableColumn fx:id="id_Klient" prefWidth="134.0" text="id_Klient" />
+                <TableColumn fx:id="date" prefWidth="308.0" text="Date" />
             </columns>
         </TableView>
-        <Button layoutX="46.0" layoutY="102.0" mnemonicParsing="false" onAction="#createRezerwacja" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Create" textFill="WHITE" />
-        <Button layoutX="46.0" layoutY="237.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Delete" textFill="WHITE" />
-      <VBox layoutX="157.0" layoutY="69.0" prefHeight="101.0" prefWidth="181.0">
+        <Button layoutX="231.0" layoutY="102.0" mnemonicParsing="false" onAction="#createRezerwacja" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Create" textFill="WHITE" />
+        <Button layoutX="46.0" layoutY="341.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Delete" textFill="WHITE" />
+      <VBox layoutX="315.0" layoutY="82.0" prefHeight="70.0" prefWidth="181.0">
          <children>
             <TextField fx:id="fieldIdKsiazka" promptText="id_Ksiazka" />
             <TextField fx:id="fieldIdKlient" promptText="id_Klient" />

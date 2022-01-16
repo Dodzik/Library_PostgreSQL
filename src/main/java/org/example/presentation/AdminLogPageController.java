@@ -54,7 +54,7 @@ public class AdminLogPageController implements Initializable {
     public void adminLogIn(ActionEvent actionEvent) throws IOException {
 
         if (logIn()){
-//                root = FXMLLoader.load(getClass().getResource("clientPanel.fxml"));\
+//                root = FXMLLoader.load(getClass().getResource("klientPanel.fxml"));\
 
 
             root = FXMLLoader.load(getClass().getResource("adminPanel.fxml"));

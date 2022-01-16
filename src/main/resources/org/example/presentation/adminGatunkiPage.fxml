@@ -4,26 +4,26 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.presentation.AdminGatunkiPageController">
+<AnchorPane prefHeight="534.0" prefWidth="810.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.presentation.AdminGatunkiPageController">
     <children>
-        <Text layoutX="191.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista Gatunkow">
+        <Text layoutX="338.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista Gatunkow">
             <font>
                 <Font name="System Bold" size="30.0" />
             </font>
         </Text>
-        <Button layoutX="46.0" layoutY="335.0" mnemonicParsing="false" onAction="#back" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Back" textFill="WHITE" />
-        <TableView fx:id="gatunkiTableView" layoutX="137.0" layoutY="218.0" onMouseClicked="#getSelected" prefHeight="158.0" prefWidth="449.0">
+        <Button layoutX="15.0" layoutY="484.0" mnemonicParsing="false" onAction="#back" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Back" textFill="WHITE" />
+        <TableView fx:id="gatunkiTableView" layoutX="137.0" layoutY="218.0" onMouseClicked="#getSelected" prefHeight="283.0" prefWidth="648.0">
             <columns>
                 <TableColumn fx:id="id" prefWidth="38.0" text="Id" />
-                <TableColumn fx:id="nazwa" prefWidth="410.0" text="Nazwa" />
+                <TableColumn fx:id="nazwa" prefWidth="609.0" text="Nazwa" />
             </columns>
         </TableView>
-        <Button layoutX="46.0" layoutY="102.0" mnemonicParsing="false" onAction="#createGatunek" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Create" textFill="WHITE" />
-        <Button layoutX="46.0" layoutY="237.0" mnemonicParsing="false" onAction="#deleteGatunek" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Delete" textFill="WHITE" />
-        <VBox layoutX="152.0" layoutY="107.0" prefHeight="25.0" prefWidth="181.0">
-            <children>
+        <Button layoutX="276.0" layoutY="103.0" mnemonicParsing="false" onAction="#createGatunek" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Create" textFill="WHITE" />
+        <Button layoutX="46.0" layoutY="342.0" mnemonicParsing="false" onAction="#deleteGatunek" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Delete" textFill="WHITE" />
+        <VBox layoutX="377.0" layoutY="108.0" prefHeight="25.0" prefWidth="181.0">
+         <children>
                 <TextField fx:id="fieldNazwa" promptText="nazwa" />
-            </children>
+         </children>
         </VBox>
     </children>
 </AnchorPane>

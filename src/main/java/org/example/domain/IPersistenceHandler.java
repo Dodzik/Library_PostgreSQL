@@ -6,11 +6,7 @@ public interface IPersistenceHandler {
 
     boolean checkAdmin(String login, String haslo);
 
-    public List<Friend> getFriends();
-
     boolean createRezerwacjaAdmin(Rezerwacja rezerwacja);
-
-    public boolean createFriend(Friend friend);
 
     public List<Klient> getKlienci();
 

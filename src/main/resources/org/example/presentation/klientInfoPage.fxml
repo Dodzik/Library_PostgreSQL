@@ -4,9 +4,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.presentation.ClientInfoPageController">
+<AnchorPane prefHeight="534.0" prefWidth="810.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.presentation.ClientInfoPageController">
    <children>
-      <VBox alignment="TOP_CENTER" layoutX="162.0" layoutY="68.0" prefHeight="318.0" prefWidth="277.0">
+      <VBox alignment="TOP_CENTER" layoutX="267.0" layoutY="57.0" prefHeight="318.0" prefWidth="277.0">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Email:" />
             <TextField fx:id="email" alignment="CENTER" disable="true" />
@@ -23,11 +23,11 @@
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Kod_pocztowy:" />
             <TextField fx:id="kodPocztowy" alignment="CENTER" disable="true" />
          </children></VBox>
-      <Text layoutX="222.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Informacje:">
+      <Text layoutX="327.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Informacje:">
          <font>
             <Font size="32.0" />
          </font>
       </Text>
-      <Button layoutX="39.0" layoutY="310.0" mnemonicParsing="false" onAction="#Back" prefHeight="34.0" prefWidth="63.0" style="-fx-background-color: green;" text="Back" textFill="WHITE" />
+      <Button layoutX="14.0" layoutY="486.0" mnemonicParsing="false" onAction="#Back" prefHeight="34.0" prefWidth="63.0" style="-fx-background-color: green;" text="Back" textFill="WHITE" />
    </children>
 </AnchorPane>

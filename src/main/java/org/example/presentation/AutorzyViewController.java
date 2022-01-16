@@ -73,7 +73,7 @@ public class AutorzyViewController implements Initializable {
     private Parent root;
 
     public void Back(ActionEvent actionEvent) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("clientPanel.fxml"));
+        root = FXMLLoader.load(getClass().getResource("klientPanel.fxml"));
         stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);

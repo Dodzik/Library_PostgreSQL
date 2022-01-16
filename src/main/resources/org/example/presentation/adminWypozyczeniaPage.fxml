@@ -4,26 +4,26 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.presentation.AdminWypozyczeniaPageController">
+<AnchorPane prefHeight="534.0" prefWidth="810.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.presentation.AdminWypozyczeniaPageController">
     <children>
-        <Text layoutX="211.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista Ksiazek">
+        <Text layoutX="280.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista Wypozyczen">
             <font>
                 <Font name="System Bold" size="30.0" />
             </font>
         </Text>
-        <Button layoutX="46.0" layoutY="335.0" mnemonicParsing="false" onAction="#back" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Back" textFill="WHITE" />
-        <TableView fx:id="wypozyczeniaTableView" layoutX="137.0" layoutY="212.0" onMouseClicked="#getSelected" prefHeight="158.0" prefWidth="449.0">
+        <Button layoutX="15.0" layoutY="488.0" mnemonicParsing="false" onAction="#back" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Back" textFill="WHITE" />
+        <TableView fx:id="wypozyczeniaTableView" layoutX="137.0" layoutY="212.0" onMouseClicked="#getSelected" prefHeight="293.0" prefWidth="642.0">
             <columns>
                 <TableColumn fx:id="id_pracownik" prefWidth="84.0" text="id_pracownik" />
-                <TableColumn fx:id="id_klient" prefWidth="63.0" text="id_klient" />
-                <TableColumn fx:id="id_ksiazka" prefWidth="90.0" text="id_ksiazka" />
-                <TableColumn fx:id="data_wypozyczenia" minWidth="0.0" prefWidth="116.0" text="data_wypozyczenia" />
-                <TableColumn fx:id="data_oddania" prefWidth="95.0" text="data_oddania" />
+                <TableColumn fx:id="id_klient" prefWidth="93.0" text="id_klient" />
+                <TableColumn fx:id="id_ksiazka" prefWidth="116.0" text="id_ksiazka" />
+                <TableColumn fx:id="data_wypozyczenia" minWidth="0.0" prefWidth="151.0" text="data_wypozyczenia" />
+                <TableColumn fx:id="data_oddania" prefWidth="197.0" text="data_oddania" />
             </columns>
         </TableView>
-        <Button layoutX="46.0" layoutY="102.0" mnemonicParsing="false" onAction="#createWypozyczenie" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Create" textFill="WHITE" />
-        <Button layoutX="46.0" layoutY="237.0" mnemonicParsing="false" onAction="#deleteWypozyczenie" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Delete" textFill="WHITE" />
-        <VBox layoutX="137.0" layoutY="75.0" prefHeight="45.0" prefWidth="181.0">
+        <Button layoutX="285.0" layoutY="111.0" mnemonicParsing="false" onAction="#createWypozyczenie" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Create" textFill="WHITE" />
+        <Button layoutX="46.0" layoutY="341.0" mnemonicParsing="false" onAction="#deleteWypozyczenie" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Delete" textFill="WHITE" />
+        <VBox layoutX="405.0" layoutY="66.0" prefHeight="45.0" prefWidth="181.0">
             <children>
                 <TextField fx:id="fieldId_pracownik" promptText="id_pracownik" />
                 <TextField fx:id="fieldId_klient" promptText="id_klient" />

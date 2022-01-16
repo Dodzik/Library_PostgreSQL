@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="534.0" prefWidth="810.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.presentation.KlientRezerwacjePageController">
+    <children>
+        <Text layoutX="301.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista Rezerwacji">
+            <font>
+                <Font name="System Bold" size="30.0" />
+            </font>
+        </Text>
+        <Button layoutX="14.0" layoutY="489.0" mnemonicParsing="false" onAction="#back" prefHeight="31.0" prefWidth="67.0" style="-fx-background-color: green;" text="Back" textFill="WHITE" />
+        <TableView fx:id="rezerwacjeTableView" layoutX="80.0" layoutY="194.0" prefHeight="244.0" prefWidth="665.0">
+            <columns>
+                <TableColumn fx:id="ksiazka" prefWidth="118.0" text="Ksiazka" />
+                <TableColumn fx:id="imie" prefWidth="152.0" text="Imie" />
+            <TableColumn fx:id="nazwisko" prefWidth="188.0" text="Nazwisko" />
+                <TableColumn fx:id="date" prefWidth="206.0" text="Data" />
+            </columns>
+        </TableView>
+      <Button layoutX="218.0" layoutY="88.0" mnemonicParsing="false" onAction="#dodajRezerwacje" prefHeight="53.0" prefWidth="83.0" style="-fx-background-color: green;" text="Dodaj Rezerwacje" textAlignment="CENTER" textFill="WHITE" wrapText="true" />
+      <TextField fx:id="fieldKsiazka" layoutX="357.0" layoutY="88.0" prefHeight="25.0" prefWidth="179.0" promptText="Ksiazka" />
+      <TextField fx:id="fieldData" layoutX="357.0" layoutY="115.0" prefHeight="25.0" prefWidth="179.0" promptText="Data" />
+    </children>
+</AnchorPane>

@@ -63,6 +63,7 @@ public class PersistenceHandler implements IPersistenceHandler {
         }
         return true;
     }
+
     @Override
     public boolean checkAdmin(String login, String haslo) {
 
@@ -91,24 +92,6 @@ public class PersistenceHandler implements IPersistenceHandler {
             System.out.println("Powodzenie");
             return true;
         }
-    }
-
-    @Override
-    public List<Friend> getFriends() {
-        try {
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM friends");
-            ResultSet sqlReturnValues = stmt.executeQuery();
-
-            List<Friend> returnValues = new ArrayList<>();
-
-            while (sqlReturnValues.next()) {
-                returnValues.add(new Friend(sqlReturnValues.getInt(1), sqlReturnValues.getString(2), sqlReturnValues.getInt(3)));
-            }
-            return returnValues;
-        } catch (SQLException throwable) {
-            throwable.printStackTrace();
-        }
-        return null;
     }
 
     @Override
@@ -151,34 +134,33 @@ public class PersistenceHandler implements IPersistenceHandler {
     }
 
     @Override
-    public void deleteKlient(Integer id_klient){
+    public void deleteKlient(Integer id_klient) {
         try {
             deleteRezerwacjeKlienta(id_klient);
-            PreparedStatement stmt = connection.prepareStatement("DELETE FROM klienci WHERE id_klient="+id_klient);
+            PreparedStatement stmt = connection.prepareStatement("DELETE FROM klienci WHERE id_klient=" + id_klient);
             stmt.executeUpdate();
 //            deleteRezerwacjeKlienta(id_klient);
             System.out.println("Usunieto klienta");
-        }
-        catch (SQLException throwable) {
+        } catch (SQLException throwable) {
             throwable.printStackTrace();
         }
 
     }
+
     @Override
-    public boolean createKlient(Klient klient){
+    public boolean createKlient(Klient klient) {
         try {
             PreparedStatement insertKlient;
-            if (klient.getId()==null){
+            if (klient.getId() == null) {
                 insertKlient = connection.prepareStatement(
                         "INSERT INTO klienci (id_klient, dane_id_dane, imie, nazwisko, email, haslo) VALUES (?,?,?,?,?,?);");
-                insertKlient.setInt(1,getMaxIndexKlienci()+1);
-                insertKlient.setInt(2,klient.getId_dane());
-                insertKlient.setString(3,klient.getName());
+                insertKlient.setInt(1, getMaxIndexKlienci() + 1);
+                insertKlient.setInt(2, klient.getId_dane());
+                insertKlient.setString(3, klient.getName());
                 insertKlient.setString(4, klient.getSurname());
-                insertKlient.setString(5,klient.getEmail());
-                insertKlient.setString(6,klient.getHaslo());
-            }
-            else {
+                insertKlient.setString(5, klient.getEmail());
+                insertKlient.setString(6, klient.getHaslo());
+            } else {
                 insertKlient = connection.prepareStatement(
                         "INSERT INTO klienci (id_klient, dane_id_dane, imie, nazwisko, email, haslo) VALUES (?,?,?,?,?,?);");
                 insertKlient.setInt(1, klient.getId());
@@ -189,7 +171,7 @@ public class PersistenceHandler implements IPersistenceHandler {
                 insertKlient.setString(6, klient.getHaslo());
             }
             insertKlient.execute();
-            
+
         } catch (SQLException throwable) {
             throwable.printStackTrace();
             return false;
@@ -198,13 +180,12 @@ public class PersistenceHandler implements IPersistenceHandler {
     }
 
     @Override
-    public void deleteRezerwacjeKlienta(Integer id_klient){
+    public void deleteRezerwacjeKlienta(Integer id_klient) {
         try {
             PreparedStatement stmt = connection.prepareStatement("DELETE FROM rezerwacje WHERE klienci_id_klient=" + id_klient);
             stmt.executeUpdate();
             System.out.println("Usunieto rezerwacje klienta");
-        }
-        catch (SQLException throwables){
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
@@ -213,15 +194,7 @@ public class PersistenceHandler implements IPersistenceHandler {
     public List<Rezerwacja> getRezerwacje() {
         try {
             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM rezerwacje");
-            ResultSet sqlReturnValues = stmt.executeQuery();
-
-            List<Rezerwacja> returnValues = new ArrayList<>();
-
-            while (sqlReturnValues.next()) {
-                returnValues.add(new Rezerwacja(sqlReturnValues.getInt(1), sqlReturnValues.getInt(2),
-                        sqlReturnValues.getInt(3),sqlReturnValues.getDate(4)));
-            }
-            return returnValues;
+            return getRezerwacjas(stmt);
         } catch (SQLException throwable) {
             throwable.printStackTrace();
         }
@@ -229,24 +202,24 @@ public class PersistenceHandler implements IPersistenceHandler {
     }
 
     @Override
-    public void deleteAutor(Integer id_autor){
+    public void deleteAutor(Integer id_autor) {
         try {
             PreparedStatement stmt = connection.prepareStatement("DELETE FROM autorzy WHERE id_autor=" + id_autor);
             stmt.executeUpdate();
             System.out.println("Usunieto Autora");
-        }
-        catch (SQLException throwables){
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
+
     @Override
-    public boolean createAutor(Autor autor){
+    public boolean createAutor(Autor autor) {
         try {
-                PreparedStatement insertAutor = connection.prepareStatement(
-                        "INSERT INTO autorzy (id_autor, imie, nazwisko) VALUES (?,?,?);");
-                insertAutor.setInt(1,getMaxIndexAutorzy()+1);
-                insertAutor.setString(2,autor.getImie());
-                insertAutor.setString(3,autor.getNazwisko());
+            PreparedStatement insertAutor = connection.prepareStatement(
+                    "INSERT INTO autorzy (id_autor, imie, nazwisko) VALUES (?,?,?);");
+            insertAutor.setInt(1, getMaxIndexAutorzy() + 1);
+            insertAutor.setString(2, autor.getImie());
+            insertAutor.setString(3, autor.getNazwisko());
             insertAutor.execute();
 
         } catch (SQLException throwable) {
@@ -257,27 +230,33 @@ public class PersistenceHandler implements IPersistenceHandler {
     }
 
     @Override
-    public void deleteKsiazka(Integer id_ksiazka){
+    public void deleteKsiazka(Integer id_ksiazka) {
         try {
+            PreparedStatement stmt2 = connection.prepareStatement("DELETE  FROM autorzy_ksiazki WHERE ksiazki_id_ksiazka=" + id_ksiazka);
+            stmt2.executeUpdate();
+            PreparedStatement stmt3 = connection.prepareStatement("DELETE FROM rezerwacje WHERE ksiazki_id_ksiazka=" + id_ksiazka);
+            stmt3.executeUpdate();
+            PreparedStatement stmt4 = connection.prepareStatement("DELETE FROM pracownicy_has_klienci WHERE ksiazki_id_ksiazka=" + id_ksiazka);
+            stmt4.executeUpdate();
             PreparedStatement stmt = connection.prepareStatement("DELETE FROM ksiazki WHERE id_ksiazka=" + id_ksiazka);
             stmt.executeUpdate();
-            System.out.println("Usunieto Ksiazke");
-        }
-        catch (SQLException throwables){
+            System.out.println("Usunieto Ksiazke ze wszystkich tabel");
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
+
     @Override
-    public boolean createKsiazka(Ksiazka ksiazka){
+    public boolean createKsiazka(Ksiazka ksiazka) {
         try {
             PreparedStatement insertKsiazka = connection.prepareStatement(
                     "INSERT INTO ksiazki (id_ksiazka, gatunki_id_gatunek, wydawnictwa_id_wydawnictwa, tytul, liczba_stron, opis) VALUES (?,?,?,?,?,?)");
-            insertKsiazka.setInt(1,getMaxIndexKsiazki()+1);
-            insertKsiazka.setInt(2,ksiazka.getGatunek_id());
-            insertKsiazka.setInt(3,ksiazka.getWydawnictwo_id());
-            insertKsiazka.setString(4,ksiazka.getTytul());
-            insertKsiazka.setInt(5,ksiazka.getLiczbaStron());
-            insertKsiazka.setString(6,ksiazka.getOpis());
+            insertKsiazka.setInt(1, getMaxIndexKsiazki() + 1);
+            insertKsiazka.setInt(2, ksiazka.getGatunek_id());
+            insertKsiazka.setInt(3, ksiazka.getWydawnictwo_id());
+            insertKsiazka.setString(4, ksiazka.getTytul());
+            insertKsiazka.setInt(5, ksiazka.getLiczbaStron());
+            insertKsiazka.setString(6, ksiazka.getOpis());
             insertKsiazka.execute();
 
         } catch (SQLException throwable) {
@@ -362,24 +341,25 @@ public class PersistenceHandler implements IPersistenceHandler {
         }
         return null;
     }
+
     @Override
-    public void deleteStanowisko(Integer id_stanowisko){
+    public void deleteStanowisko(Integer id_stanowisko) {
         try {
             PreparedStatement stmt = connection.prepareStatement("DELETE FROM stanowiska WHERE id_stanowisko=" + id_stanowisko);
             stmt.executeUpdate();
             System.out.println("Usunieto Stanowisko");
-        }
-        catch (SQLException throwables){
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
+
     @Override
-    public boolean createStanowisko(Stanowisko stanowisko){
+    public boolean createStanowisko(Stanowisko stanowisko) {
         try {
-            PreparedStatement insertStanowisko= connection.prepareStatement(
+            PreparedStatement insertStanowisko = connection.prepareStatement(
                     "INSERT INTO stanowiska (id_stanowisko, nazwa) VALUES (?,?)");
-            insertStanowisko.setInt(1,getMaxIndexStanowiska()+1);
-            insertStanowisko.setString(2,stanowisko.getNazwa());
+            insertStanowisko.setInt(1, getMaxIndexStanowiska() + 1);
+            insertStanowisko.setString(2, stanowisko.getNazwa());
             insertStanowisko.execute();
 
         } catch (SQLException throwable) {
@@ -430,31 +410,29 @@ public class PersistenceHandler implements IPersistenceHandler {
             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM klienci WHERE klienci.email=" + "'" + sesjaEmail + "'");
             ResultSet sqlReturnValues = stmt.executeQuery();
             Integer Klient_id = 0;
-//            String imie ="";
-//            String nazwisko="";
             while (sqlReturnValues.next()) {
                 Klient_id = sqlReturnValues.getInt(1);
-//                imie=sqlReturnValues.getString(3);
-//                nazwisko=sqlReturnValues.getString(4);
             }
 
             PreparedStatement stmt2 = connection.prepareStatement("SELECT * FROM rezerwacje WHERE rezerwacje.klienci_id_klient=" + Klient_id);
-            ResultSet sqlReturnValues2 = stmt2.executeQuery();
-
-            List<Rezerwacja> returnValues = new ArrayList<>();
-            while (sqlReturnValues2.next()) {
-//                System.out.println(new Rezerwacja(sqlReturnValues2.getInt(1),sqlReturnValues2.getInt(2),
-//                        sqlReturnValues2.getInt(3),
-//                        sqlReturnValues2.getDate(4)));
-                returnValues.add(new Rezerwacja(sqlReturnValues2.getInt(1), sqlReturnValues2.getInt(2),
-                        sqlReturnValues2.getInt(3),
-                        sqlReturnValues2.getDate(4)));
-            }
-            return returnValues;
+            return getRezerwacjas(stmt2);
         } catch (SQLException throwable) {
             throwable.printStackTrace();
         }
         return null;
+    }
+
+    private List<Rezerwacja> getRezerwacjas(PreparedStatement stmt2) throws SQLException {
+        ResultSet sqlReturnValues2 = stmt2.executeQuery();
+
+        List<Rezerwacja> returnValues = new ArrayList<>();
+        while (sqlReturnValues2.next()) {
+
+            returnValues.add(new Rezerwacja(sqlReturnValues2.getInt(1), sqlReturnValues2.getInt(2),
+                    sqlReturnValues2.getInt(3),
+                    sqlReturnValues2.getDate(4)));
+        }
+        return returnValues;
     }
 
     @Override
@@ -519,8 +497,9 @@ public class PersistenceHandler implements IPersistenceHandler {
         }
         return null;
     }
+
     @Override
-    public Pracownik getPracownkInformacje(){
+    public Pracownik getPracownkInformacje() {
         try {
             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM pracownicy WHERE login=" + "'" + sesjaEmail + "'");
             ResultSet sqlReturnValues = stmt.executeQuery();
@@ -533,8 +512,9 @@ public class PersistenceHandler implements IPersistenceHandler {
         }
         return null;
     }
+
     @Override
-    public Stanowisko getStanowiskoPracownik(Integer id_stanowisko){
+    public Stanowisko getStanowiskoPracownik(Integer id_stanowisko) {
         try {
             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM stanowiska WHERE id_stanowisko=" + id_stanowisko);
             ResultSet sqlReturnValues = stmt.executeQuery();
@@ -564,6 +544,7 @@ public class PersistenceHandler implements IPersistenceHandler {
         }
         return true;
     }
+
     @Override
     public boolean createRezerwacjaAdmin(Rezerwacja rezerwacja) {
         try {
@@ -574,21 +555,6 @@ public class PersistenceHandler implements IPersistenceHandler {
             insertStatement.setInt(2, rezerwacja.getKsiazka_id());
             insertStatement.setInt(3, rezerwacja.getKlient_id());
             insertStatement.setDate(4, rezerwacja.getDate());
-            insertStatement.execute();
-        } catch (SQLException throwable) {
-            throwable.printStackTrace();
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public boolean createFriend(Friend friend) {
-        try {
-            PreparedStatement insertStatement = connection.prepareStatement(
-                    "INSERT INTO friends (name, phone_number) VALUES (?,?);");
-            insertStatement.setString(1, friend.getName());
-            insertStatement.setInt(2, friend.getPhone());
             insertStatement.execute();
         } catch (SQLException throwable) {
             throwable.printStackTrace();
@@ -611,6 +577,7 @@ public class PersistenceHandler implements IPersistenceHandler {
         }
         return null;
     }
+
     @Override
     public Integer getMaxIndexKlienci() {
         try {
@@ -625,6 +592,7 @@ public class PersistenceHandler implements IPersistenceHandler {
         }
         return null;
     }
+
     @Override
     public Integer getMaxIndexStanowiska() {
         try {
@@ -639,6 +607,7 @@ public class PersistenceHandler implements IPersistenceHandler {
         }
         return null;
     }
+
     @Override
     public Integer getMaxIndexAutorzy() {
         try {
@@ -653,6 +622,7 @@ public class PersistenceHandler implements IPersistenceHandler {
         }
         return null;
     }
+
     @Override
     public Integer getMaxIndexKsiazki() {
         try {
@@ -699,6 +669,7 @@ public class PersistenceHandler implements IPersistenceHandler {
         }
         return null;
     }
+
     @Override
     public Integer getMaxIndexDane() {
         try {
@@ -713,6 +684,7 @@ public class PersistenceHandler implements IPersistenceHandler {
         }
         return null;
     }
+
     @Override
     public List<Dane> getDane() {
         try {
@@ -723,8 +695,8 @@ public class PersistenceHandler implements IPersistenceHandler {
 
             while (sqlReturnValues.next()) {
                 returnValues.add(new Dane(sqlReturnValues.getInt(1),
-                        sqlReturnValues.getString(2),sqlReturnValues.getString(3)
-                ,sqlReturnValues.getString(4),sqlReturnValues.getString(5)));
+                        sqlReturnValues.getString(2), sqlReturnValues.getString(3)
+                        , sqlReturnValues.getString(4), sqlReturnValues.getString(5)));
             }
             return returnValues;
         } catch (SQLException throwable) {
@@ -734,26 +706,26 @@ public class PersistenceHandler implements IPersistenceHandler {
     }
 
     @Override
-    public void deleteDane(Integer id_dane){
+    public void deleteDane(Integer id_dane) {
         try {
             PreparedStatement stmt = connection.prepareStatement("DELETE FROM dane WHERE id_dane=" + id_dane);
             stmt.executeUpdate();
             System.out.println("Usunieto Dane");
-        }
-        catch (SQLException throwables){
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
+
     @Override
-    public boolean createDane(Dane dane){
+    public boolean createDane(Dane dane) {
         try {
-            PreparedStatement insertDane= connection.prepareStatement(
+            PreparedStatement insertDane = connection.prepareStatement(
                     "INSERT INTO dane (id_dane, miasto, ulica, nr_domu, kod_pocztowy) VALUES (?,?,?,?,?)");
-            insertDane.setInt(1,getMaxIndexDane()+1);
-            insertDane.setString(2,dane.getMiasto());
-            insertDane.setString(3,dane.getUlica());
-            insertDane.setString(4,dane.getNr_domu());
-            insertDane.setString(5,dane.getKod_pocztowy());
+            insertDane.setInt(1, getMaxIndexDane() + 1);
+            insertDane.setString(2, dane.getMiasto());
+            insertDane.setString(3, dane.getUlica());
+            insertDane.setString(4, dane.getNr_domu());
+            insertDane.setString(5, dane.getKod_pocztowy());
 
 
             insertDane.execute();
@@ -764,6 +736,7 @@ public class PersistenceHandler implements IPersistenceHandler {
         }
         return true;
     }
+
     @Override
     public List<Wypozyczenie> getWypozyczenia() {
         try {
@@ -774,8 +747,8 @@ public class PersistenceHandler implements IPersistenceHandler {
 
             while (sqlReturnValues.next()) {
                 returnValues.add(new Wypozyczenie(sqlReturnValues.getInt(1),
-                        sqlReturnValues.getInt(2),sqlReturnValues.getInt(3)
-                        ,sqlReturnValues.getDate(4),sqlReturnValues.getDate(5)));
+                        sqlReturnValues.getInt(2), sqlReturnValues.getInt(3)
+                        , sqlReturnValues.getDate(4), sqlReturnValues.getDate(5)));
             }
             return returnValues;
         } catch (SQLException throwable) {
@@ -783,31 +756,32 @@ public class PersistenceHandler implements IPersistenceHandler {
         }
         return null;
     }
+
     @Override
-    public void deleteWypozyczenie(Integer id_pracownik, Integer id_klient, Integer id_ksiazka){
+    public void deleteWypozyczenie(Integer id_pracownik, Integer id_klient, Integer id_ksiazka) {
         try {
             PreparedStatement stmt = connection.prepareStatement("DELETE FROM pracownicy_has_klienci WHERE" +
-                    " pracownicy_id_pracownik=" + id_pracownik+" AND klienci_id_klient="+id_klient+"" +
-                    " AND ksiazki_id_ksiazka="+id_ksiazka);
+                    " pracownicy_id_pracownik=" + id_pracownik + " AND klienci_id_klient=" + id_klient + "" +
+                    " AND ksiazki_id_ksiazka=" + id_ksiazka);
             stmt.executeUpdate();
             System.out.println("Usunieto Wypozyczenie");
-        }
-        catch (SQLException throwables){
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
+
     @Override
-    public boolean createWypozyczenie(Wypozyczenie wypozyczenie){
+    public boolean createWypozyczenie(Wypozyczenie wypozyczenie) {
         try {
-            PreparedStatement insertWypozyczenie= connection.prepareStatement(
+            PreparedStatement insertWypozyczenie = connection.prepareStatement(
                     "INSERT INTO pracownicy_has_klienci" +
                             " (pracownicy_id_pracownik, klienci_id_klient, ksiazki_id_ksiazka, data_wypozyczenia, data_oddania) " +
                             "VALUES (?,?,?,?,?)");
-            insertWypozyczenie.setInt(1,wypozyczenie.getId_pracownik());
-            insertWypozyczenie.setInt(2,wypozyczenie.getId_klient());
-            insertWypozyczenie.setInt(3,wypozyczenie.getId_ksiazka());
-            insertWypozyczenie.setDate(4,wypozyczenie.getData_wypozyczenia());
-            insertWypozyczenie.setDate(5,wypozyczenie.getData_oddania());
+            insertWypozyczenie.setInt(1, wypozyczenie.getId_pracownik());
+            insertWypozyczenie.setInt(2, wypozyczenie.getId_klient());
+            insertWypozyczenie.setInt(3, wypozyczenie.getId_ksiazka());
+            insertWypozyczenie.setDate(4, wypozyczenie.getData_wypozyczenia());
+            insertWypozyczenie.setDate(5, wypozyczenie.getData_oddania());
             insertWypozyczenie.execute();
 
         } catch (SQLException throwable) {
@@ -835,25 +809,26 @@ public class PersistenceHandler implements IPersistenceHandler {
         }
         return null;
     }
+
     @Override
-    public void deleteAutorzyKsiazek(Integer id_autor, Integer id_ksiazka){
+    public void deleteAutorzyKsiazek(Integer id_autor, Integer id_ksiazka) {
         try {
             PreparedStatement stmt = connection.prepareStatement("DELETE FROM autorzy_ksiazki WHERE" +
-                    " autorzy_id_autor=" + id_autor+" AND ksiazki_id_ksiazka="+id_ksiazka);
+                    " autorzy_id_autor=" + id_autor + " AND ksiazki_id_ksiazka=" + id_ksiazka);
             stmt.executeUpdate();
             System.out.println("Usunieto AutorzyKsiazek");
-        }
-        catch (SQLException throwables){
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
+
     @Override
-    public boolean createAutorzyKsiazek(AutorzyKsiazek autorzyKsiazek){
+    public boolean createAutorzyKsiazek(AutorzyKsiazek autorzyKsiazek) {
         try {
-            PreparedStatement insertAutorzyKsiazek= connection.prepareStatement(
+            PreparedStatement insertAutorzyKsiazek = connection.prepareStatement(
                     "INSERT INTO autorzy_ksiazki (autorzy_id_autor, ksiazki_id_ksiazka) VALUES (?,?);");
-            insertAutorzyKsiazek.setInt(1,autorzyKsiazek.getAutor_id());
-            insertAutorzyKsiazek.setInt(2,autorzyKsiazek.getKsiazka_id());
+            insertAutorzyKsiazek.setInt(1, autorzyKsiazek.getAutor_id());
+            insertAutorzyKsiazek.setInt(2, autorzyKsiazek.getKsiazka_id());
             insertAutorzyKsiazek.execute();
         } catch (SQLException throwable) {
             throwable.printStackTrace();
@@ -880,6 +855,7 @@ public class PersistenceHandler implements IPersistenceHandler {
         }
         return null;
     }
+
     @Override
     public Integer getMaxIndexWydawnictwa() {
         try {
@@ -894,24 +870,25 @@ public class PersistenceHandler implements IPersistenceHandler {
         }
         return null;
     }
+
     @Override
-    public void deleteWydawnictwo(Integer id_wydawnictwo){
+    public void deleteWydawnictwo(Integer id_wydawnictwo) {
         try {
-            PreparedStatement stmt = connection.prepareStatement("DELETE FROM wydawnictwa WHERE id_wydawnictwa="+id_wydawnictwo);
+            PreparedStatement stmt = connection.prepareStatement("DELETE FROM wydawnictwa WHERE id_wydawnictwa=" + id_wydawnictwo);
             stmt.executeUpdate();
             System.out.println("Usunieto Wydawnictwo");
-        }
-        catch (SQLException throwables){
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
+
     @Override
-    public boolean createWydawnictwo(Wydawnictwo wydawnictwo){
+    public boolean createWydawnictwo(Wydawnictwo wydawnictwo) {
         try {
-            PreparedStatement insertWydawnictwo= connection.prepareStatement(
+            PreparedStatement insertWydawnictwo = connection.prepareStatement(
                     "INSERT INTO wydawnictwa (id_wydawnictwa, nazwa) VALUES (?,?);");
-            insertWydawnictwo.setInt(1,getMaxIndexWydawnictwa()+1);
-            insertWydawnictwo.setString(2,wydawnictwo.getNazwa());
+            insertWydawnictwo.setInt(1, getMaxIndexWydawnictwa() + 1);
+            insertWydawnictwo.setString(2, wydawnictwo.getNazwa());
             insertWydawnictwo.execute();
         } catch (SQLException throwable) {
             throwable.printStackTrace();
@@ -938,6 +915,7 @@ public class PersistenceHandler implements IPersistenceHandler {
         }
         return null;
     }
+
     @Override
     public Integer getMaxIndexGatunki() {
         try {
@@ -952,24 +930,25 @@ public class PersistenceHandler implements IPersistenceHandler {
         }
         return null;
     }
+
     @Override
-    public void deleteGatunek(Integer id_gatunek){
+    public void deleteGatunek(Integer id_gatunek) {
         try {
-            PreparedStatement stmt = connection.prepareStatement("DELETE FROM gatunki WHERE id_gatunek="+id_gatunek);
+            PreparedStatement stmt = connection.prepareStatement("DELETE FROM gatunki WHERE id_gatunek=" + id_gatunek);
             stmt.executeUpdate();
             System.out.println("Usunieto Gatunek");
-        }
-        catch (SQLException throwables){
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
+
     @Override
-    public boolean createGatunek(Gatunek gatunek){
+    public boolean createGatunek(Gatunek gatunek) {
         try {
-            PreparedStatement insertGatunek= connection.prepareStatement(
+            PreparedStatement insertGatunek = connection.prepareStatement(
                     "INSERT INTO gatunki (id_gatunek, nazwa) VALUES (?,?);");
-            insertGatunek.setInt(1,getMaxIndexGatunki()+1);
-            insertGatunek.setString(2,gatunek.getNazwa());
+            insertGatunek.setInt(1, getMaxIndexGatunki() + 1);
+            insertGatunek.setString(2, gatunek.getNazwa());
             insertGatunek.execute();
         } catch (SQLException throwable) {
             throwable.printStackTrace();
@@ -977,6 +956,7 @@ public class PersistenceHandler implements IPersistenceHandler {
         }
         return true;
     }
+
     @Override
     public List<Pracownik> getPracownicy() {
         try {
@@ -987,7 +967,7 @@ public class PersistenceHandler implements IPersistenceHandler {
 
             while (sqlReturnValues.next()) {
                 returnValues.add(new Pracownik(sqlReturnValues.getInt(1),
-                        sqlReturnValues.getInt(2),sqlReturnValues.getString(3),
+                        sqlReturnValues.getInt(2), sqlReturnValues.getString(3),
                         sqlReturnValues.getString(4)));
             }
             return returnValues;
@@ -996,6 +976,7 @@ public class PersistenceHandler implements IPersistenceHandler {
         }
         return null;
     }
+
     @Override
     public Integer getMaxIndexPracownicy() {
         try {
@@ -1010,26 +991,27 @@ public class PersistenceHandler implements IPersistenceHandler {
         }
         return null;
     }
+
     @Override
-    public void deletePracownik(Integer id_pracownik){
+    public void deletePracownik(Integer id_pracownik) {
         try {
-            PreparedStatement stmt = connection.prepareStatement("DELETE FROM pracownicy WHERE id_pracownik="+id_pracownik);
+            PreparedStatement stmt = connection.prepareStatement("DELETE FROM pracownicy WHERE id_pracownik=" + id_pracownik);
             stmt.executeUpdate();
             System.out.println("Usunieto Pracownika");
-        }
-        catch (SQLException throwables){
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
+
     @Override
-    public boolean createPracownik(Pracownik pracownik){
+    public boolean createPracownik(Pracownik pracownik) {
         try {
-            PreparedStatement insertPracownik= connection.prepareStatement(
+            PreparedStatement insertPracownik = connection.prepareStatement(
                     "INSERT INTO pracownicy (id_pracownik, stanowiska_id_stanowisko,login,haslo) VALUES (?,?,?,?);");
-            insertPracownik.setInt(1,getMaxIndexPracownicy()+1);
-            insertPracownik.setInt(2,pracownik.getStanowisko_id());
-            insertPracownik.setString(3,pracownik.getLogin());
-            insertPracownik.setString(4,pracownik.getHaslo());
+            insertPracownik.setInt(1, getMaxIndexPracownicy() + 1);
+            insertPracownik.setInt(2, pracownik.getStanowisko_id());
+            insertPracownik.setString(3, pracownik.getLogin());
+            insertPracownik.setString(4, pracownik.getHaslo());
             insertPracownik.execute();
         } catch (SQLException throwable) {
             throwable.printStackTrace();

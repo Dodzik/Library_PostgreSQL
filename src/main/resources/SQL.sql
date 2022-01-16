@@ -1,8 +1,3 @@
--- CREATE TABLE friends (
---     id SERIAL PRIMARY KEY,
---     name VARCHAR(200) NOT NULL,
---     phone_number INTEGER NOT NULL
--- );
 CREATE TABLE autorzy
 (
     id_autor SERIAL PRIMARY KEY,
@@ -29,25 +24,6 @@ CREATE TABLE wydawnictwa
     nazwa          VARCHAR NULL
 );
 
--- CREATE TABLE ksiazki (
---                          id_ksiazka SERIAL PRIMARY KEY   ,
---                          pracownicy_has_klienci_klienci_id_klient INTEGER   NOT NULL  ,
---                          pracownicy_has_klienci_pracownicy_id_pracownik INTEGER   NOT NULL  ,
---                          gatunki_id_gatunek INTEGER   NOT NULL  ,
---                          wydawnictwa_id_wydawnictwa INTEGER   NOT NULL  ,
---                          rezerwacje_id_rezerwacje INTEGER   NOT NULL  ,
---                          tytul VARCHAR  NULL  ,
---                          liczba_stron INTEGER   NULL  ,
---                          opis VARCHAR  NULL   );
--- CREATE TABLE ksiazki (
---                          id_ksiazka  SERIAL PRIMARY KEY,
---                          gatunki_id_gatunek INTEGER   NOT NULL  ,
---                          wydawnictwa_id_wydawnictwa INTEGER   NOT NULL  ,
---                          rezerwacje_id_rezerwacje INTEGER   NOT NULL  ,
---                          tytul VARCHAR  NULL  ,
---                          liczba_stron INTEGER  NULL  ,
---                          opis VARCHAR  NULL );
-
 CREATE TABLE ksiazki
 (
     id_ksiazka                 SERIAL PRIMARY KEY,
@@ -58,13 +34,6 @@ CREATE TABLE ksiazki
     opis                       VARCHAR NULL
 );
 
-
-
--- CREATE TABLE rezerwacje (
---                             id_rezerwacje SERIAL PRIMARY KEY,
---                             klienci_id_klient INTEGER   NOT NULL  ,
---                             data_2 DATE  NULL  ,
---                             id_ksiazka INTEGER   NULL  );
 
 CREATE TABLE rezerwacje
 (
@@ -100,12 +69,6 @@ CREATE TABLE pracownicy
     haslo                    VARCHAR NULL
 );
 
--- CREATE TABLE pracownicy_has_klienci (
---                                          pracownicy_id_pracownik INTEGER  NOT NULL  ,
---                                          klienci_id_klient INTEGER  NOT NULL  ,
---                                          data_wyporzyczenia DATE  NULL  ,
---                                          data_oddania DATE  NULL    ,
---                                          PRIMARY KEY(pracownicy_id_pracownik, klienci_id_klient)  );
 CREATE TABLE pracownicy_has_klienci
 (
     pracownicy_id_pracownik INTEGER NOT NULL,
@@ -139,8 +102,6 @@ ALTER TABLE ksiazki
 ALTER TABLE ksiazki
     ADD FOREIGN KEY ("wydawnictwa_id_wydawnictwa") REFERENCES "wydawnictwa" ("id_wydawnictwa");
 
--- ALTER TABLE ksiazki ADD FOREIGN KEY ("rezerwacje_id_rezerwacje") REFERENCES "rezerwacje" ("id_rezerwacje");
-
 ALTER TABLE pracownicy
     ADD FOREIGN KEY ("stanowiska_id_stanowisko") REFERENCES "stanowiska" ("id_stanowisko");
 
@@ -161,11 +122,6 @@ ALTER TABLE rezerwacje
 
 ALTER TABLE klienci
     ADD FOREIGN KEY ("dane_id_dane") REFERENCES "dane" ("id_dane");
-
--- ALTER TABLE ksiazki ADD FOREIGN KEY ("pracownicy_has_klienci_klienci_id_klient") REFERENCES "pracownicy_has_klienci" ("klienci_id_klient");
-
--- ALTER TABLE ksiazki ADD FOREIGN KEY ("pracownicy_has_klienci_pracownicy_id_pracownik") REFERENCES "pracownicy_has_klienci" ("pracownicy_id_pracownik");
-
 
 INSERT INTO autorzy (id_autor, imie, nazwisko)
 VALUES (1, 'Mateusz', 'Kowalski');
@@ -248,18 +204,212 @@ INSERT INTO pracownicy_has_klienci (pracownicy_id_pracownik, klienci_id_klient, 
 VALUES (1, 2, 1, '2021-12-26', '2022-01-15');
 
 
--- CREATE OR REPLACE FUNCTION usuwanieRezerwacjiKlienta (id_k int) RETURNS text AS $$
---
--- BEGIN
---     DELETE FROM klienci WHERE id_klient = id_k;
---     IF NOT FOUND THEN
---         RAISE EXCEPTION 'Klienta % nie ma w bazie', id_k;
---     END IF;
---     RETURN 'Success';
--- END;
--- $$
---     LANGUAGE 'plpgsql';
---
--- CREATE TRIGGER usuwanieRezerwacji BEFORE DELETE ON klienci
---     FOR EACH ROW
--- EXECUTE PROCEDURE usuwanieRezerwacjiKlienta();
+-----------------------------------------------------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION zmien_haslo_pracownik(idPrac int, oldpass varchar, newpass varchar)
+    RETURNS integer AS
+$$
+DECLARE
+
+BEGIN
+    IF EXISTS(SELECT 1 FROM pracownicy p WHERE p.id_pracownik=idPrac and p.haslo=oldpass) THEN
+        update pracownicy
+        set haslo = newpass
+        where id_pracownik=idPrac;
+        return 1;
+    else
+        return 0;
+    end if;
+END
+$$
+    LANGUAGE plpgsql;
+-----------------------------------------------------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION zmien_haslo_klient(idKlient int, oldpass varchar, newpass varchar)
+    RETURNS integer AS
+$$
+DECLARE
+
+BEGIN
+    IF EXISTS(SELECT 1 FROM klienci p WHERE p.id_klient=idKlient and p.haslo=oldpass) THEN
+        update klienci
+        set haslo = newpass
+        where id_klient=idKlient;
+        return 1;
+    else
+        return 0;
+    end if;
+END
+$$
+    LANGUAGE plpgsql;
+-----------------------------------------------------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION update_ksiazka_tytul(idKsiazka int , nowyTytul varchar )
+    RETURNS integer AS
+$$
+DECLARE
+
+BEGIN
+    IF EXISTS(SELECT 1 FROM ksiazki p WHERE p.id_ksiazka=idKsiazka) THEN
+        update ksiazki
+        set tytul = nowyTytul
+        where id_ksiazka=idKsiazka;
+        return 1;
+    else
+        return 0;
+    end if;
+END
+$$
+    LANGUAGE plpgsql;
+-----------------------------------------------------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION insert_pracownik() RETURNS TRIGGER AS $$
+BEGIN
+    IF EXISTS(SELECT 1 FROM pracownicy p WHERE p.login = New.login ) THEN
+
+        RAISE EXCEPTION 'Taki pracownik już istnieje!';
+    ELSE
+        RETURN NEW;
+    END IF;
+END;
+$$ LANGUAGE 'plpgsql';
+
+CREATE TRIGGER pracownicy_insert_validation
+    BEFORE INSERT OR UPDATE ON pracownicy
+    FOR EACH ROW EXECUTE PROCEDURE insert_pracownik();
+
+------------------------------------------------------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION insert_klient() RETURNS TRIGGER AS $$
+BEGIN
+    IF EXISTS(SELECT 1 FROM klienci p WHERE p.email = New.email ) THEN
+
+        RAISE EXCEPTION 'Taki klient już istnieje!';
+    ELSE
+        RETURN NEW;
+    END IF;
+END;
+$$ LANGUAGE 'plpgsql';
+
+CREATE TRIGGER klient_insert_validation
+    BEFORE INSERT OR UPDATE ON klienci
+    FOR EACH ROW EXECUTE PROCEDURE insert_klient();
+------------------------------------------------------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION insert_ksiazka() RETURNS TRIGGER AS $$
+BEGIN
+    IF EXISTS(SELECT 1 FROM ksiazki p WHERE p.tytul = New.tytul ) THEN
+
+        RAISE EXCEPTION 'Taka ksiazka już istnieje!';
+    ELSE
+        RETURN NEW;
+    END IF;
+END;
+$$ LANGUAGE 'plpgsql';
+
+CREATE TRIGGER ksiazka_insert_validation
+    BEFORE INSERT OR UPDATE ON ksiazki
+    FOR EACH ROW EXECUTE PROCEDURE insert_ksiazka();
+------------------------------------------------------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION insert_wydawnictwo() RETURNS TRIGGER AS $$
+BEGIN
+    IF EXISTS(SELECT 1 FROM wydawnictwa p WHERE p.nazwa = New.nazwa ) THEN
+
+        RAISE EXCEPTION 'Taka wydawnictwo już istnieje!';
+    ELSE
+        RETURN NEW;
+    END IF;
+END;
+$$ LANGUAGE 'plpgsql';
+
+CREATE TRIGGER wydawnictwo_insert_validation
+    BEFORE INSERT OR UPDATE ON wydawnictwa
+    FOR EACH ROW EXECUTE PROCEDURE insert_wydawnictwo();
+------------------------------------------------------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION insert_autor_ksiazki() RETURNS TRIGGER AS $$
+BEGIN
+    IF EXISTS(SELECT 1 FROM autorzy_ksiazki p
+    WHERE p.autorzy_id_autor = New.autorzy_id_autor AND p.ksiazki_id_ksiazka = New.ksiazki_id_ksiazka  ) THEN
+
+        RAISE EXCEPTION 'Taka relacja już istnieje!';
+    ELSE
+        RETURN NEW;
+    END IF;
+END;
+$$ LANGUAGE 'plpgsql';
+
+CREATE TRIGGER autorzy_ksiazki_insert_validation
+    BEFORE INSERT OR UPDATE ON autorzy_ksiazki
+    FOR EACH ROW EXECUTE PROCEDURE insert_autor_ksiazki();
+------------------------------------------------------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION insert_autor() RETURNS TRIGGER AS $$
+BEGIN
+    IF EXISTS(SELECT 1 FROM autorzy p WHERE p.imie = New.imie AND p.nazwisko = New.nazwisko) THEN
+
+        RAISE EXCEPTION 'Taki autor już istnieje!';
+    ELSE
+        RETURN NEW;
+    END IF;
+END;
+$$ LANGUAGE 'plpgsql';
+
+CREATE TRIGGER autor_insert_validation
+    BEFORE INSERT OR UPDATE ON autorzy
+    FOR EACH ROW EXECUTE PROCEDURE insert_autor();
+
+------------------------------------------------------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION insert_gatunek() RETURNS TRIGGER AS $$
+BEGIN
+    IF EXISTS(SELECT 1 FROM gatunki p WHERE p.nazwa = New.nazwa) THEN
+
+        RAISE EXCEPTION 'Taki gatunek już istnieje!';
+    ELSE
+        RETURN NEW;
+    END IF;
+END;
+$$ LANGUAGE 'plpgsql';
+
+CREATE TRIGGER gatunek_insert_validation
+    BEFORE INSERT OR UPDATE ON gatunki
+    FOR EACH ROW EXECUTE PROCEDURE insert_gatunek();
+
+------------------------------------------------------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION insert_stanowisko() RETURNS TRIGGER AS $$
+BEGIN
+    IF EXISTS(SELECT 1 FROM stanowiska p WHERE p.nazwa = New.nazwa) THEN
+
+        RAISE EXCEPTION 'Taki stanowisko już istnieje!';
+    ELSE
+        RETURN NEW;
+    END IF;
+END;
+$$ LANGUAGE 'plpgsql';
+
+CREATE TRIGGER stanowisko_insert_validation
+    BEFORE INSERT OR UPDATE ON stanowiska
+    FOR EACH ROW EXECUTE PROCEDURE insert_stanowisko();
+------------------------------------------------------------------------------------------------------------
+
+CREATE VIEW lista_pracownikow
+as
+select p.id_pracownik, p.login, p.haslo, s.id_stanowisko, s.nazwa
+from pracownicy p join stanowiska s on p.stanowiska_id_stanowisko = s.id_stanowisko;
+------------------------------------------------------------------------------------------------------------
+
+CREATE VIEW  list_klienci
+as
+select p.imie,p.nazwisko, p.haslo, p.email,d.miasto, d.ulica, d.nr_domu, d.kod_pocztowy
+from klienci p join dane d on p.dane_id_dane = d.id_dane;
+------------------------------------------------------------------------------------------------------------
+
+CREATE VIEW  lista_ksiazek
+as
+SELECT k.id_ksiazka,k.tytul, k.liczba_stron,k.opis,g.nazwa AS gatunek,w.nazwa AS wydawnictwo
+from ksiazki k join gatunki g on k.gatunki_id_gatunek = g.id_gatunek
+               join wydawnictwa w on w.id_wydawnictwa = k.wydawnictwa_id_wydawnictwa;
+------------------------------------------------------------------------------------------------------------

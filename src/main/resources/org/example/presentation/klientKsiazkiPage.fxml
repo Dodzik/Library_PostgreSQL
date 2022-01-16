@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="534.0" prefWidth="810.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.presentation.KlientKsiazkiPageController">
+   <children>
+      <Text layoutX="316.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista Ksiazek">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Text>
+      <Button layoutX="14.0" layoutY="481.0" mnemonicParsing="false" onAction="#Back" prefHeight="31.0" prefWidth="67.0" style="-fx-background-color: green;" text="Back" textFill="WHITE" />
+      <TableView fx:id="booksTableView" layoutX="145.0" layoutY="200.0" prefHeight="312.0" prefWidth="646.0">
+        <columns>
+          <TableColumn fx:id="id" prefWidth="50.0" text="Id" />
+            <TableColumn fx:id="tytul" prefWidth="83.0" text="Tytul" />
+          <TableColumn fx:id="gatunek" prefWidth="75.0" text="Gatunek" />
+            <TableColumn fx:id="wydawnictwo" prefWidth="92.0" text="Wydawnictwo" />
+            <TableColumn fx:id="liczbaStron" prefWidth="90.0" text="liczba_stron" />
+            <TableColumn fx:id="opis" prefWidth="255.0" text="opis" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

@@ -17,7 +17,7 @@ public class MainPageController {
     private Parent root;
 
     public void switchToClient(ActionEvent actionEvent) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("clientLogPage.fxml"));
+        root = FXMLLoader.load(getClass().getResource("klientLogPage.fxml"));
         stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);

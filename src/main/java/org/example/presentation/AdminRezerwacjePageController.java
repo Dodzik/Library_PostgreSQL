@@ -79,20 +79,20 @@ public class AdminRezerwacjePageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        id.setCellValueFactory(new PropertyValueFactory<Rezerwacja,Integer>("id_rezerwacje"));
-        id_Ksiazki.setCellValueFactory(new PropertyValueFactory<Rezerwacja,Integer>("ksiazka_id"));
-        id_Klient.setCellValueFactory(new PropertyValueFactory<Rezerwacja,Integer>("klient_id"));
-        date.setCellValueFactory(new PropertyValueFactory<Rezerwacja, Date>("date"));
+        id.setCellValueFactory(new PropertyValueFactory<>("id_rezerwacje"));
+        id_Ksiazki.setCellValueFactory(new PropertyValueFactory<>("ksiazka_id"));
+        id_Klient.setCellValueFactory(new PropertyValueFactory<>("klient_id"));
+        date.setCellValueFactory(new PropertyValueFactory<>("date"));
 
         rezerwacjeTableView.setItems(list);
 
     }
 
-    public void deleteRezerwacja(ActionEvent actionEvent){
+    public void deleteRezerwacja(){
         persistenceHandler.deleteKlient(id_rezerwacja);
         updateUI();
     }
-    public void createRezerwacja(ActionEvent actionEvent){
+    public void createRezerwacja(){
         String sdate = fieldDate.getText();
         java.sql.Date date1;
         try {

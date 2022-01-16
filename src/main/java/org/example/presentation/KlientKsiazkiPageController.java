@@ -22,12 +22,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ListBooksViewController implements Initializable {
+public class KlientKsiazkiPageController implements Initializable {
 
     IPersistenceHandler persistenceHandler = PersistenceHandler.getInstance();
-
-    @FXML
-    private ListView booksListView;
 
     @FXML
     private TableView<Ksiazka> booksTableView;
@@ -57,14 +54,13 @@ public class ListBooksViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-//        booksListView.getItems().addAll(persistenceHandler.getKsiazki());
 
-        id.setCellValueFactory(new PropertyValueFactory<Ksiazka,Integer>("id"));
+        id.setCellValueFactory(new PropertyValueFactory<>("id"));
         gatunek.setCellValueFactory(new PropertyValueFactory<>("gatunek_id"));
-        wydawnictwo.setCellValueFactory(new PropertyValueFactory<Ksiazka,Integer>("wydawnictwo_id"));
-        tytul.setCellValueFactory(new PropertyValueFactory<Ksiazka,String>("tytul"));
-        liczbaStron.setCellValueFactory(new PropertyValueFactory<Ksiazka,Integer>("liczbaStron"));
-        opis.setCellValueFactory(new PropertyValueFactory<Ksiazka,String>("opis"));
+        wydawnictwo.setCellValueFactory(new PropertyValueFactory<>("wydawnictwo_id"));
+        tytul.setCellValueFactory(new PropertyValueFactory<>("tytul"));
+        liczbaStron.setCellValueFactory(new PropertyValueFactory<>("liczbaStron"));
+        opis.setCellValueFactory(new PropertyValueFactory<>("opis"));
 
         booksTableView.setItems(list);
         updateUI();
@@ -72,7 +68,6 @@ public class ListBooksViewController implements Initializable {
     }
 
     private void updateUI(){
-        booksListView.getItems().addAll(persistenceHandler.getKsiazki());
 
         gatunek.setCellFactory(tc -> new TableCell<>() {
             @Override
@@ -107,7 +102,7 @@ public class ListBooksViewController implements Initializable {
     private Parent root;
 
     public void Back(ActionEvent actionEvent) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("clientPanel.fxml"));
+        root = FXMLLoader.load(getClass().getResource("klientPanel.fxml"));
         stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);

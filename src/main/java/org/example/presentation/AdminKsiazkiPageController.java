@@ -86,7 +86,7 @@ public class AdminKsiazkiPageController implements Initializable {
                 Integer.parseInt(fieldLiczbaStron.getText()),fieldOpis.getText());
 
         if (persistenceHandler.createKsiazka(ksiazka)){
-            System.out.println("Dodano Rezerwacje");
+            System.out.println("Dodano Ksiazke");
             fieldIdGatunek.setPromptText("id_gatunek");
             fieldIdWydawnictwo.setPromptText("id_wydawnictwo");
             fieldTytul.setPromptText("tytul");

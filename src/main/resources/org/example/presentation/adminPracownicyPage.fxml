@@ -4,25 +4,25 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.presentation.AdminPracownicyPageController">
+<AnchorPane prefHeight="534.0" prefWidth="810.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.presentation.AdminPracownicyPageController">
     <children>
-        <Text layoutX="155.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista Pracownikow">
+        <Text layoutX="274.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista Pracownikow">
             <font>
                 <Font name="System Bold" size="30.0" />
             </font>
         </Text>
-        <Button layoutX="46.0" layoutY="335.0" mnemonicParsing="false" onAction="#back" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Back" textFill="WHITE" />
-        <TableView fx:id="pracownicyTableView" layoutX="137.0" layoutY="218.0" onMouseClicked="#getSelected" prefHeight="158.0" prefWidth="449.0">
+        <Button layoutX="15.0" layoutY="485.0" mnemonicParsing="false" onAction="#back" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Back" textFill="WHITE" />
+        <TableView fx:id="pracownicyTableView" layoutX="137.0" layoutY="218.0" onMouseClicked="#getSelected" prefHeight="286.0" prefWidth="636.0">
             <columns>
                 <TableColumn fx:id="id" prefWidth="34.0" text="Id" />
                 <TableColumn fx:id="id_stanowisko" prefWidth="117.0" text="id_stanowisko" />
-                <TableColumn fx:id="login" prefWidth="146.0" text="login" />
-                <TableColumn fx:id="haslo" prefWidth="151.0" text="haslo" />
+                <TableColumn fx:id="login" prefWidth="231.0" text="login" />
+                <TableColumn fx:id="haslo" prefWidth="253.0" text="haslo" />
             </columns>
         </TableView>
-        <Button layoutX="46.0" layoutY="102.0" mnemonicParsing="false" onAction="#createPracownik" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Create" textFill="WHITE" />
-        <Button layoutX="46.0" layoutY="237.0" mnemonicParsing="false" onAction="#deletePracownik" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Delete" textFill="WHITE" />
-        <VBox layoutX="184.0" layoutY="82.0" prefHeight="54.0" prefWidth="205.0">
+        <Button layoutX="212.0" layoutY="102.0" mnemonicParsing="false" onAction="#createPracownik" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Create" textFill="WHITE" />
+        <Button layoutX="46.0" layoutY="344.0" mnemonicParsing="false" onAction="#deletePracownik" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Delete" textFill="WHITE" />
+        <VBox layoutX="303.0" layoutY="82.0" prefHeight="54.0" prefWidth="205.0">
             <children>
                 <TextField fx:id="fieldIdStanowisko" promptText="id_stanowisko" />
                 <TextField fx:id="fieldLogin" promptText="login" />
