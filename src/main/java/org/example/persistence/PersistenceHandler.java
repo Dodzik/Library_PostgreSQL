@@ -790,6 +790,20 @@ public class PersistenceHandler implements IPersistenceHandler {
         }
         return true;
     }
+    @Override
+    public boolean updateWypozyczenie(Integer id_pracownik, Integer id_klient, Integer id_ksiazka, Date data_oddania){
+        try{
+            PreparedStatement stmt = connection.prepareStatement(
+                    "UPDATE pracownicy_has_klienci SET data_oddania ='" + data_oddania +
+                            "' WHERE pracownicy_id_pracownik="+id_pracownik+ " AND klienci_id_klient="+id_klient+
+                            " AND ksiazki_id_ksiazka="+id_ksiazka);
+            stmt.executeUpdate();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 
     @Override
     public List<AutorzyKsiazek> getAutorzyKsiazek() {

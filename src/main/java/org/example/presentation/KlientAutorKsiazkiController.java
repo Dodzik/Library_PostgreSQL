@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -21,7 +22,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AutorBooksController implements Initializable {
+public class KlientAutorKsiazkiController implements Initializable {
     IPersistenceHandler persistenceHandler = PersistenceHandler.getInstance();
 
     @FXML
@@ -54,15 +55,15 @@ public class AutorBooksController implements Initializable {
 
 
 
-        id.setCellValueFactory(new PropertyValueFactory<Ksiazka,Integer>("id"));
+        id.setCellValueFactory(new PropertyValueFactory<>("id"));
         gatunek.setCellValueFactory(new PropertyValueFactory<>("gatunek_id"));
-        wydawnictwo.setCellValueFactory(new PropertyValueFactory<Ksiazka,Integer>("wydawnictwo_id"));
-        tytul.setCellValueFactory(new PropertyValueFactory<Ksiazka,String>("tytul"));
-        liczbaStron.setCellValueFactory(new PropertyValueFactory<Ksiazka,Integer>("liczbaStron"));
-        opis.setCellValueFactory(new PropertyValueFactory<Ksiazka,String>("opis"));
+        wydawnictwo.setCellValueFactory(new PropertyValueFactory<>("wydawnictwo_id"));
+        tytul.setCellValueFactory(new PropertyValueFactory<>("tytul"));
+        liczbaStron.setCellValueFactory(new PropertyValueFactory<>("liczbaStron"));
+        opis.setCellValueFactory(new PropertyValueFactory<>("opis"));
 
         booksTableView.setItems(list);
-
+        updateUI();
     }
 
     private Stage stage;
@@ -75,5 +76,31 @@ public class AutorBooksController implements Initializable {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+    private void updateUI(){
+
+        gatunek.setCellFactory(tc -> new TableCell<>() {
+            @Override
+            protected void updateItem(Integer gatunek_id, boolean empty) {
+                super.updateItem(gatunek_id, empty);
+                if (empty) {
+                    setText(null);
+                } else {
+                    setText(persistenceHandler.getGatunekId(gatunek_id));
+                }
+            }
+        });
+
+        wydawnictwo.setCellFactory(tc -> new TableCell<>() {
+            @Override
+            protected void updateItem(Integer wydawnictwo_id, boolean empty) {
+                super.updateItem(wydawnictwo_id, empty);
+                if (empty) {
+                    setText(null);
+                } else {
+                    setText(persistenceHandler.getWydawnictwoById(wydawnictwo_id));
+                }
+            }
+        });
     }
 }

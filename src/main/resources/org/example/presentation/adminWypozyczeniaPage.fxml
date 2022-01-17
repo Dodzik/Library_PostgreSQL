@@ -21,7 +21,7 @@
                 <TableColumn fx:id="data_oddania" prefWidth="197.0" text="data_oddania" />
             </columns>
         </TableView>
-        <Button layoutX="285.0" layoutY="111.0" mnemonicParsing="false" onAction="#createWypozyczenie" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Create" textFill="WHITE" />
+        <Button layoutX="292.0" layoutY="83.0" mnemonicParsing="false" onAction="#createWypozyczenie" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Create" textFill="WHITE" />
         <Button layoutX="46.0" layoutY="341.0" mnemonicParsing="false" onAction="#deleteWypozyczenie" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Delete" textFill="WHITE" />
         <VBox layoutX="405.0" layoutY="66.0" prefHeight="45.0" prefWidth="181.0">
             <children>
@@ -32,6 +32,7 @@
                 <TextField fx:id="fieldData_oddania" promptText="data_oddania" />
             </children>
         </VBox>
+      <Button layoutX="292.0" layoutY="148.0" mnemonicParsing="false" onAction="#updateWypozyczenie" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: green;" text="Update" textFill="WHITE" />
     </children>
 
 </AnchorPane>

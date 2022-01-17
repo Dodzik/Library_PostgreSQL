@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AutorzyViewController implements Initializable {
+public class KlientAutorzyViewController implements Initializable {
 
     IPersistenceHandler persistenceHandler = PersistenceHandler.getInstance();
 
@@ -47,9 +47,9 @@ public class AutorzyViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        id.setCellValueFactory(new PropertyValueFactory<Autor,Integer>("id"));
+        id.setCellValueFactory(new PropertyValueFactory<>("id"));
         imie.setCellValueFactory(new PropertyValueFactory<>("imie"));
-        nazwisko.setCellValueFactory(new PropertyValueFactory<Autor,String>("nazwisko"));
+        nazwisko.setCellValueFactory(new PropertyValueFactory<>("nazwisko"));
 
         autorzyTableView.setItems(list);
     }
@@ -82,7 +82,7 @@ public class AutorzyViewController implements Initializable {
 
     public void checkAutor(ActionEvent actionEvent) throws IOException{
         persistenceHandler.setTemp(autor_id);
-        root = FXMLLoader.load(getClass().getResource("autorBooks.fxml"));
+        root = FXMLLoader.load(getClass().getResource("klientAutorKsiazkiPage.fxml"));
         stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);

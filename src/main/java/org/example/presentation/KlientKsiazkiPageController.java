@@ -54,7 +54,6 @@ public class KlientKsiazkiPageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         gatunek.setCellValueFactory(new PropertyValueFactory<>("gatunek_id"));
         wydawnictwo.setCellValueFactory(new PropertyValueFactory<>("wydawnictwo_id"));
@@ -93,9 +92,7 @@ public class KlientKsiazkiPageController implements Initializable {
             }
         });
 
-
     }
-
 
     private Stage stage;
     private Scene scene;

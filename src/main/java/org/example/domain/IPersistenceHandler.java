@@ -1,5 +1,6 @@
 package org.example.domain;
 
+import java.sql.Date;
 import java.util.List;
 
 public interface IPersistenceHandler {
@@ -93,6 +94,8 @@ public interface IPersistenceHandler {
     void deleteAutorzyKsiazek(Integer id_autor, Integer id_ksiazka);
 
     boolean createWypozyczenie(Wypozyczenie wypozyczenie);
+
+    boolean updateWypozyczenie(Integer id_pracownik, Integer id_klient, Integer id_ksiazka, Date data_oddania);
 
     List<AutorzyKsiazek> getAutorzyKsiazek();
 

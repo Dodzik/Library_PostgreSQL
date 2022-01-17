@@ -71,7 +71,6 @@ public class AdminWypozyczeniaPageController implements Initializable {
     public void getSelected(MouseEvent mouseEvent) {
         Integer index = wypozyczeniaTableView.getSelectionModel().getSelectedIndex();
         if (index <= -1){
-
             return;
         }
         id_prac = id_pracownik.getCellData(index);
@@ -120,6 +119,28 @@ public class AdminWypozyczeniaPageController implements Initializable {
         updateUI();
     }
 
+    public void updateWypozyczenie(ActionEvent actionEvent){
+        String sdate2 = fieldData_oddania.getText();
+        Date date2;
+        try {
+                date2 = Date.valueOf(sdate2);
+        }
+        catch (Exception e){
+            fieldData_oddania.clear();
+            fieldData_oddania.setPromptText("Niepoprawna data oddania");
+            return;
+        }
+        if (persistenceHandler.updateWypozyczenie(id_prac,id_klien,id_ksiaz,date2)){
+            fieldData_oddania.setPromptText("data_oddania");
+        }
+        else {
+            System.out.println("Error!");
+            fieldData_oddania.setPromptText("Niepoprawnedata_oddania");
+        }
+
+        updateUI();
+    }
+
     public void deleteWypozyczenie(ActionEvent actionEvent) {
         try {
             persistenceHandler.deleteWypozyczenie(id_prac,id_klien,id_ksiaz);
@@ -135,9 +156,9 @@ public class AdminWypozyczeniaPageController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        id_pracownik.setCellValueFactory(new PropertyValueFactory<Wypozyczenie,Integer>("id_pracownik"));
-        id_klient.setCellValueFactory(new PropertyValueFactory<Wypozyczenie,Integer>("id_klient"));
-        id_ksiazka.setCellValueFactory(new PropertyValueFactory<Wypozyczenie,Integer >("id_ksiazka"));
+        id_pracownik.setCellValueFactory(new PropertyValueFactory<>("id_pracownik"));
+        id_klient.setCellValueFactory(new PropertyValueFactory<>("id_klient"));
+        id_ksiazka.setCellValueFactory(new PropertyValueFactory<>("id_ksiazka"));
         data_wypozyczenia.setCellValueFactory(new PropertyValueFactory<>("data_wypozyczenia"));
         data_oddania.setCellValueFactory(new PropertyValueFactory<>("data_oddania"));
 

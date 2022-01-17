@@ -401,7 +401,7 @@ select p.id_pracownik, p.login, p.haslo, s.id_stanowisko, s.nazwa
 from pracownicy p join stanowiska s on p.stanowiska_id_stanowisko = s.id_stanowisko;
 ------------------------------------------------------------------------------------------------------------
 
-CREATE VIEW  list_klienci
+CREATE VIEW  lista_klienci
 as
 select p.imie,p.nazwisko, p.haslo, p.email,d.miasto, d.ulica, d.nr_domu, d.kod_pocztowy
 from klienci p join dane d on p.dane_id_dane = d.id_dane;
