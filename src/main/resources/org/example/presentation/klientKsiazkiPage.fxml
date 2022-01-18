@@ -19,7 +19,7 @@
           <TableColumn fx:id="gatunek" prefWidth="75.0" text="Gatunek" />
             <TableColumn fx:id="wydawnictwo" prefWidth="92.0" text="Wydawnictwo" />
             <TableColumn fx:id="liczbaStron" prefWidth="90.0" text="liczba_stron" />
-            <TableColumn fx:id="opis" prefWidth="255.0" text="opis" />
+            <TableColumn fx:id="opis" prefWidth="370.0" text="opis" />
         </columns>
       </TableView>
    </children>
