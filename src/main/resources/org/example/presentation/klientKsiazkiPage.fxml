@@ -22,5 +22,7 @@
             <TableColumn fx:id="opis" prefWidth="370.0" text="opis" />
         </columns>
       </TableView>
+      <Button layoutX="249.0" layoutY="107.0" mnemonicParsing="false" onAction="#sortKsiazki" prefHeight="31.0" prefWidth="67.0" style="-fx-background-color: green;" text="Szukaj" textFill="WHITE" />
+      <TextField fx:id="szukane" layoutX="337.0" layoutY="110.0" promptText="szukany tytul" />
    </children>
 </AnchorPane>

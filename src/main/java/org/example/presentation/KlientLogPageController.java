@@ -21,7 +21,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ResourceBundle;
 
-public class ClientLogPageController implements Initializable {
+public class KlientLogPageController implements Initializable {
 
     IPersistenceHandler persistenceHandler = PersistenceHandler.getInstance();
 
@@ -38,13 +38,6 @@ public class ClientLogPageController implements Initializable {
     @FXML
     private TextField txthaslo;
 
-//    @FXML
-//    private ListView<Klient> klientList;
-//
-//    @Override
-//    public void initialize(URL url, ResourceBundle resourceBundle) {
-//        klientList.getItems().addAll(persistenceHandler.getKlienci());
-//    }
 
     Connection con = null;
     PreparedStatement preparedStatement = null;
@@ -54,8 +47,6 @@ public class ClientLogPageController implements Initializable {
     public void clientLogIn(ActionEvent actionEvent) throws IOException {
 
         if (logIn()){
-//                root = FXMLLoader.load(getClass().getResource("klientPanel.fxml"));\
-
 
                 root = FXMLLoader.load(getClass().getResource("klientPanel.fxml"));
                 stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
@@ -76,7 +67,6 @@ public class ClientLogPageController implements Initializable {
         String haslo = txthaslo.getText();
         return persistenceHandler.checkClient(email,haslo);
     }
-
 
     private void setLblError(Color color, String text) {
         lblErrors.setTextFill(color);

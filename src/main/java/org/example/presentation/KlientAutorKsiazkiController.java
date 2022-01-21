@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.example.domain.Ksiazka;
@@ -69,6 +70,8 @@ public class KlientAutorKsiazkiController implements Initializable {
     private Stage stage;
     private Scene scene;
     private Parent root;
+
+
 
     public void Back(ActionEvent actionEvent) throws IOException {
         root = FXMLLoader.load(getClass().getResource("klientAutorzyView.fxml"));

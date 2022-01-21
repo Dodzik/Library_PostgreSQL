@@ -9,10 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.example.domain.*;
@@ -47,6 +44,9 @@ public class KlientKsiazkiPageController implements Initializable {
     @FXML
     private TableColumn<Ksiazka,String> opis;
 
+    @FXML
+    public TextField szukane;
+
     ObservableList<Ksiazka> list = FXCollections.observableList(
            persistenceHandler.getKsiazki()
     );
@@ -64,6 +64,11 @@ public class KlientKsiazkiPageController implements Initializable {
         booksTableView.setItems(list);
         updateUI();
 
+    }
+    public void sortKsiazki(){
+        list=FXCollections.observableList(persistenceHandler.sortKsiazki(szukane.getText()));
+        booksTableView.setItems(list);
+        updateUI();
     }
 
     private void updateUI(){

@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ClientInfoPageController implements Initializable {
+public class KlientInfoPageController implements Initializable {
 
     IPersistenceHandler persistenceHandler = PersistenceHandler.getInstance();
 

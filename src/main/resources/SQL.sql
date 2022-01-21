@@ -205,7 +205,7 @@ VALUES (1, 2, 1, '2021-12-26', '2022-01-15');
 
 
 -----------------------------------------------------------------------------------------------------------
-
+--funckja pozwalająca zmienić hasło pracownika
 CREATE OR REPLACE FUNCTION zmien_haslo_pracownik(idPrac int, oldpass varchar, newpass varchar)
     RETURNS integer AS
 $$
@@ -224,7 +224,7 @@ END
 $$
     LANGUAGE plpgsql;
 -----------------------------------------------------------------------------------------------------------
-
+--funkcja pozwalająca zmieni hasło klienta
 CREATE OR REPLACE FUNCTION zmien_haslo_klient(idKlient int, oldpass varchar, newpass varchar)
     RETURNS integer AS
 $$
@@ -243,7 +243,26 @@ END
 $$
     LANGUAGE plpgsql;
 -----------------------------------------------------------------------------------------------------------
+--funkcja pozwalająca zmienic stanowisko pracownika
+CREATE OR REPLACE FUNCTION update_stanowisko_pracownika(idPracownik int, newstanowisko int)
+    RETURNS integer AS
+$$
+DECLARE
 
+BEGIN
+    IF EXISTS(SELECT 1 FROM pracownicy p WHERE p.id_pracownik=idPracownik) THEN
+        update pracownicy
+        set stanowiska_id_stanowisko = newstanowisko
+        where id_pracownik=idPracownik;
+        return 1;
+    else
+        return 0;
+    end if;
+END
+$$
+    LANGUAGE plpgsql;
+-----------------------------------------------------------------------------------------------------------
+--funkcja pozwalająca zmienic tytul ksiazki o podanym id
 CREATE OR REPLACE FUNCTION update_ksiazka_tytul(idKsiazka int , nowyTytul varchar )
     RETURNS integer AS
 $$
@@ -262,7 +281,63 @@ END
 $$
     LANGUAGE plpgsql;
 -----------------------------------------------------------------------------------------------------------
+--funkcja pozwalająca zmienic gatunek ksiazki o podanym id
+CREATE OR REPLACE FUNCTION update_ksiazka_gatunek(idKsiazka int , nowyGatunek int )
+    RETURNS integer AS
+$$
+DECLARE
 
+BEGIN
+    IF EXISTS(SELECT 1 FROM ksiazki p WHERE p.id_ksiazka=idKsiazka) THEN
+        update ksiazki
+        set gatunki_id_gatunek = nowyGatunek
+        where id_ksiazka=idKsiazka;
+        return 1;
+    else
+        return 0;
+    end if;
+END
+$$
+    LANGUAGE plpgsql;
+-----------------------------------------------------------------------------------------------------------
+--funkcja pozwalająca zmienic wydawnictwo ksiazki o podanym id
+CREATE OR REPLACE FUNCTION update_ksiazka_wydawnictwo(idKsiazka int , noweWydawnictwo int )
+    RETURNS integer AS
+$$
+DECLARE
+
+BEGIN
+    IF EXISTS(SELECT 1 FROM ksiazki p WHERE p.id_ksiazka=idKsiazka) THEN
+        update ksiazki
+        set wydawnictwa_id_wydawnictwa = noweWydawnictwo
+        where id_ksiazka=idKsiazka;
+        return 1;
+    else
+        return 0;
+    end if;
+END
+$$
+    LANGUAGE plpgsql;
+-----------------------------------------------------------------------------------------------------------
+--funkcja pozwalająca sprawdzic czy funkcja jest aktualnie mozliwa do wypozyczenia
+CREATE OR REPLACE FUNCTION Sprawdzanie_dostepnosci_ksiazki(idKsiazki int)
+    RETURNS TEXT AS
+$$
+DECLARE
+
+BEGIN
+    IF EXISTS(SELECT 1 FROM pracownicy_has_klienci p WHERE p.ksiazki_id_ksiazka=idKsiazki AND p.data_oddania IS NULL) THEN
+
+        RETURN 'Ksiazka o indeksie ' ||idKsiazki||' jest nie dostepna';
+
+    else
+        RETURN 'Ksiazka o indeksie ' ||idKsiazki||' jest dostepna';
+    end if;
+END
+$$
+    LANGUAGE plpgsql;
+-----------------------------------------------------------------------------------------------------------
+--funkcje i trigary validujące wszystkie wprowadzane dane do tabel
 CREATE OR REPLACE FUNCTION insert_pracownik() RETURNS TRIGGER AS $$
 BEGIN
     IF EXISTS(SELECT 1 FROM pracownicy p WHERE p.login = New.login ) THEN
@@ -394,22 +469,27 @@ CREATE TRIGGER stanowisko_insert_validation
     BEFORE INSERT OR UPDATE ON stanowiska
     FOR EACH ROW EXECUTE PROCEDURE insert_stanowisko();
 ------------------------------------------------------------------------------------------------------------
-
-CREATE VIEW lista_pracownikow
+--widoki pozwalające grupowac informacje o podanych pracownikach, klientach i ksiazki
+CREATE OR REPLACE VIEW lista_pracownikow
 as
 select p.id_pracownik, p.login, p.haslo, s.id_stanowisko, s.nazwa
 from pracownicy p join stanowiska s on p.stanowiska_id_stanowisko = s.id_stanowisko;
 ------------------------------------------------------------------------------------------------------------
 
-CREATE VIEW  lista_klienci
+CREATE OR REPLACE VIEW  lista_klienci
 as
 select p.imie,p.nazwisko, p.haslo, p.email,d.miasto, d.ulica, d.nr_domu, d.kod_pocztowy
 from klienci p join dane d on p.dane_id_dane = d.id_dane;
 ------------------------------------------------------------------------------------------------------------
 
-CREATE VIEW  lista_ksiazek
+CREATE OR REPLACE VIEW  lista_ksiazek
 as
 SELECT k.id_ksiazka,k.tytul, k.liczba_stron,k.opis,g.nazwa AS gatunek,w.nazwa AS wydawnictwo
 from ksiazki k join gatunki g on k.gatunki_id_gatunek = g.id_gatunek
                join wydawnictwa w on w.id_wydawnictwa = k.wydawnictwa_id_wydawnictwa;
 ------------------------------------------------------------------------------------------------------------
+CREATE OR REPLACE VIEW lista_rezerwacji
+as
+SELECT r.id_rezerwacje ,k.imie ,k.nazwisko , ks.tytul,r.data_2
+from rezerwacje r join klienci k on r.klienci_id_klient=k.id_klient
+                  join ksiazki ks on ks.id_ksiazka=r.ksiazki_id_ksiazka;

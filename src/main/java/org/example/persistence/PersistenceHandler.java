@@ -132,19 +132,47 @@ public class PersistenceHandler implements IPersistenceHandler {
         }
         return null;
     }
+    @Override
+    public List<Ksiazka> sortKsiazki(String str){
+        try {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM ksiazki WHERE tytul LIKE "+"'"+str+"%'");
+            ResultSet sqlReturnValues = stmt.executeQuery();
+
+            List<Ksiazka> returnValues = new ArrayList<>();
+
+            while (sqlReturnValues.next()) {
+                returnValues.add(new Ksiazka(sqlReturnValues.getInt(1), sqlReturnValues.getInt(2),
+                        sqlReturnValues.getInt(3), sqlReturnValues.getString(4), sqlReturnValues.getInt(5),
+                        sqlReturnValues.getString(6)));
+            }
+            return returnValues;
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+        return null;
+    }
 
     @Override
     public void deleteKlient(Integer id_klient) {
         try {
+            deleteWypozyczeniaKlienta(id_klient);
             deleteRezerwacjeKlienta(id_klient);
             PreparedStatement stmt = connection.prepareStatement("DELETE FROM klienci WHERE id_klient=" + id_klient);
             stmt.executeUpdate();
-//            deleteRezerwacjeKlienta(id_klient);
             System.out.println("Usunieto klienta");
         } catch (SQLException throwable) {
             throwable.printStackTrace();
         }
 
+    }
+    @Override
+    public void deleteWypozyczeniaKlienta(Integer id_klient){
+        try{
+            PreparedStatement stmt = connection.prepareStatement("DELETE FROM pracownicy_has_klienci WHERE klienci_id_klient=" +id_klient);
+            stmt.executeUpdate();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
     }
 
     @Override
