@@ -319,7 +319,7 @@ END
 $$
     LANGUAGE plpgsql;
 -----------------------------------------------------------------------------------------------------------
---funkcja pozwalająca sprawdzic czy funkcja jest aktualnie mozliwa do wypozyczenia
+--funkcja pozwalająca sprawdzic czy ksiazka jest aktualnie mozliwa do wypozyczenia
 CREATE OR REPLACE FUNCTION Sprawdzanie_dostepnosci_ksiazki(idKsiazki int)
     RETURNS TEXT AS
 $$
@@ -354,7 +354,7 @@ CREATE TRIGGER pracownicy_insert_validation
     FOR EACH ROW EXECUTE PROCEDURE insert_pracownik();
 
 ------------------------------------------------------------------------------------------------------------
-
+---------------------------TRIGERRY VALIDUJACE WPROWADZANE DANE---------------------------------------------
 CREATE OR REPLACE FUNCTION insert_klient() RETURNS TRIGGER AS $$
 BEGIN
     IF EXISTS(SELECT 1 FROM klienci p WHERE p.email = New.email ) THEN
@@ -469,7 +469,7 @@ CREATE TRIGGER stanowisko_insert_validation
     BEFORE INSERT OR UPDATE ON stanowiska
     FOR EACH ROW EXECUTE PROCEDURE insert_stanowisko();
 ------------------------------------------------------------------------------------------------------------
---widoki pozwalające grupowac informacje o podanych pracownikach, klientach i ksiazki
+-----widoki pozwalające grupowac informacje o podanych pracownikach, klientach, rezewacjach i ksiazki-------
 CREATE OR REPLACE VIEW lista_pracownikow
 as
 select p.id_pracownik, p.login, p.haslo, s.id_stanowisko, s.nazwa
